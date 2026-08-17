@@ -4,6 +4,15 @@ TROADiscordSEMonitor is a native Discord bridge for Space Engineers Torch server
 
 The Discord bot connection is the primary delivery method. Webhooks are fallback-only and are not needed for normal chat, commands, embeds, or server notifications.
 
+## Platform Support
+
+TROADiscordSEMonitor supports both of these Torch hosting environments:
+
+- **Windows:** Standard Windows-based Torch dedicated servers.
+- **Linux/Wine:** AMP-managed Linux hosts running Torch through Wine.
+
+Install the same plugin ZIP in Torch on either platform. Each server needs a compatible Torch and Space Engineers version, outbound HTTPS access on TCP port `443`, and its own Discord bot configuration.
+
 ## Copyright and License
 
 Copyright (c) 2026 TROAINC. All Rights Reserved.
