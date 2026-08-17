@@ -4,6 +4,12 @@ TROADiscordSEMonitor is a native Discord bridge for Space Engineers Torch server
 
 The Discord bot connection is the primary delivery method. Webhooks are fallback-only and are not needed for normal chat, commands, embeds, or server notifications.
 
+## About This Project
+
+TROADiscordSEMonitor was built from the ground up to replace the outdated SEDiscordBot solution with a reliable, modern Discord bridge for Space Engineers Torch servers. Significant development time has gone into this plugin.
+
+Feature requests are welcome and help guide future development. Please do not reupload, redistribute, or attempt to modify the plugin without TROAINC's prior written consent. The monitor is designed as a foundation that may also support additional game-server platforms in the future.
+
 ## Discord Bot Required
 
 You must create a Discord application and bot before installing this plugin. Add that bot to your Discord server, enable its **Message Content Intent**, and enter its bot token and channel IDs in the plugin configuration. The monitor cannot send notifications, relay chat, or process Discord commands without a configured bot.
