@@ -120,6 +120,9 @@
   <StatusDashboardChannelId></StatusDashboardChannelId>
   <StatusDashboardIntervalMinutes>30</StatusDashboardIntervalMinutes>
   <StatusDashboardAcceptCommands>false</StatusDashboardAcceptCommands>
+  <ConnectWebsiteUrl>https://your-server-website.example</ConnectWebsiteUrl>
+  <ConnectSupportUrl>https://your-support-site.example</ConnectSupportUrl>
+  <ConnectSupportEmail>admin@example.com</ConnectSupportEmail>
   <ServerPort>0</ServerPort>
   <EnableEssentialsRestartTracking>true</EnableEssentialsRestartTracking>
   <EssentialsConfigPath></EssentialsConfigPath>
