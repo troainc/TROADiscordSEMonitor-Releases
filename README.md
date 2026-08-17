@@ -173,9 +173,14 @@ Set `EnableStatusDashboard` to `true` to enable the main server card.
 | `StatusDashboardChannelId` | Channel that holds the persistent dashboard. |
 | `StatusDashboardIntervalMinutes` | Refresh interval; default is `30` minutes. |
 | `StatusDashboardAcceptCommands` | Allows authorized commands in the dashboard channel. |
+| `ConnectWebsiteUrl` | Website shown in the dashboard's **CONNECT & SUPPORT** section. |
+| `ConnectSupportUrl` | Support or ticket URL shown in the dashboard's **CONNECT & SUPPORT** section. |
+| `ConnectSupportEmail` | Administrator/support email shown in the dashboard's **CONNECT & SUPPORT** section. |
 | `ServerPort` | Space Engineers port used in the join address. Use `!addport` to set it. |
 
 The plugin creates the card once, saves the Discord message ID in plugin storage, then edits the same message every update. `!seserver` refreshes that same card immediately. If the original message is deleted, the bot creates and tracks a replacement.
+
+The **CONNECT & SUPPORT** section is editable through `ConnectWebsiteUrl`, `ConnectSupportUrl`, and `ConnectSupportEmail`. Leave a field empty to display `not configured` instead of publishing an incorrect link or email.
 
 ## Lifecycle Notifications
 
