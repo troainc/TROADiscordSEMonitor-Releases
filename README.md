@@ -274,6 +274,16 @@ Set `UsePlayerStatus` to true to post join/leave messages. Use `PlayerStatusChan
 | `{keenid}` | Keen identity ID when available. |
 | `{count}` | Current online player count. |
 
+### Player Identity Management
+
+The admin connection log gives server owners a current identity record whenever a player joins or leaves. Each entry can include the player name, **Steam ID**, **Keen ID**, and current player count, so staff can investigate incidents with the identifiers that matter instead of relying only on display names.
+
+- **Steam ID:** The player’s 64-bit Steam identifier. Use it as the durable player reference for administration, Discord-to-Steam authorization, bans, rewards, and cross-plugin commands.
+- **Keen ID:** The currently observed Space Engineers identity identifier. Keen IDs can change as player identities are recreated or affected by game/server events, which can make historical investigations difficult. The monitor logs the latest observed Keen ID on each connection so staff can quickly find the player’s current in-game identity.
+- **Discord ID:** The user’s Discord identifier. It is used to verify who issued Discord commands and, when configured with a Discord-to-Steam mapping, provides the extra authorization check for remote administration.
+
+Configure `UseAdminPlayerLog` and `AdminLogChannelId` to keep this information in a private staff channel. Treat these logs as administrative records and restrict channel access to trusted staff.
+
 ### Discord Bot Card
 
 Set `UseDiscordPresence` to true to update the Discord bot card.
