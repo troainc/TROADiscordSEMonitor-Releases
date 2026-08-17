@@ -98,6 +98,8 @@ It reports the Discord channel ID and your Discord user ID. It does not grant ac
 
 Keep command channels private. Only trusted administrators should run remote Torch commands.
 
+Administrator access can be verified by matching the sender's Discord user ID to their 64-bit Steam ID. This dual-identity check adds a security layer: a Discord account alone does not authorize remote server commands unless its mapped Steam ID is also approved in the configuration.
+
 ### Recommended Direct Discord Access
 
 ```xml
