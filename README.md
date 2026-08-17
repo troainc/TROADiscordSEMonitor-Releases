@@ -328,6 +328,42 @@ Native bot posting is primary. `WebhookUrl`, `ChatWebhookUrl`, `StatusWebhookUrl
 | `!reward` grants nothing | Configure `VoteRewardTorchCommand` with a valid Torch/plugin reward command. |
 | Config change does not apply | Run `!reload` as an administrator or restart Torch. |
 
+## Minimal Configuration Example
+
+After Torch creates `TROADiscordSEMonitor.cfg`, stop the server and replace the placeholder values below. Keep your bot token private and never commit the live configuration file to a public repository.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<BridgeConfig>
+  <Enabled>true</Enabled>
+  <BotToken>PASTE_A_NEW_DISCORD_BOT_TOKEN_HERE</BotToken>
+  <ServerName>YOUR SERVER NAME</ServerName>
+
+  <ChatChannelId>PASTE_GAME_CHAT_CHANNEL_ID</ChatChannelId>
+  <StatusChannelId>PASTE_SERVER_STATUS_CHANNEL_ID</StatusChannelId>
+  <CommandChannelId>PASTE_PRIVATE_ADMIN_CHANNEL_ID</CommandChannelId>
+  <CommandPrefix>!</CommandPrefix>
+  <Embed>true</Embed>
+
+  <UseStatus>true</UseStatus>
+  <Starting>Server is starting up.</Starting>
+  <Started>Server is online.</Started>
+  <Stopped>Server is offline.</Stopped>
+
+  <ServerToDiscord>true</ServerToDiscord>
+  <BotToGame>true</BotToGame>
+  <UsePlayerStatus>true</UsePlayerStatus>
+
+  <AdminDiscordUserIds>
+    <string>PASTE_ADMIN_DISCORD_USER_ID</string>
+  </AdminDiscordUserIds>
+
+  <StatusTimeZoneId>Eastern Standard Time</StatusTimeZoneId>
+</BridgeConfig>
+```
+
+Use `!bridge-id` in a Discord channel to obtain its channel ID and your Discord user ID. Restart Torch or run `!reload` after saving configuration changes.
+
 ## Security
 
 - Never publish your Discord bot token or server-list API key.
