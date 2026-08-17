@@ -158,6 +158,12 @@ Authorized administrators can run Torch commands and commands exposed by compati
 
 Commands must use the exact syntax required by the installed plugin. Output returns to the same Discord command channel. Set `AllowAnyTorchCommand` to `false` to limit remote use to root command names in `AllowedTorchCommands`.
 
+### Command Audit Trail
+
+Every command received from Discord is recorded in the configured audit channel so server owners and administrators have a clear operational history. The audit entry identifies the Discord user who issued the command, the command text, when it was requested, and whether Torch or the target plugin accepted, rejected, returned output for, or could not find the command.
+
+This provides accountability for remote administration: owners can verify saves, restarts, grid restores, profiling actions, and other administrative work without relying on memory or guessing who ran what. Keep `AdminCommandAuditChannelId` private and limit access to trusted staff, because its history may include sensitive operational details.
+
 ## Persistent `!seserver` Dashboard
 
 Set `EnableStatusDashboard` to `true` to enable the main server card.
