@@ -1,5 +1,11 @@
 # TROADiscordSEMonitor
 
+## Current Release
+
+Download [TROADiscordSEMonitor v1.0.2](./TROADiscordSEMonitor-v1.0.2.zip).
+
+This hotfix prevents Discord Gateway reconnects from replaying a stale `Server is starting up.` message after the Torch session is already loaded. New configuration examples default `EnableRestartScheduler` to `false`; a disabled scheduler already prevents its restart timer from starting.
+
 TROADiscordSEMonitor is a native Discord bridge for Space Engineers Torch servers. It is designed for AMP hosts running Linux/Wine and also works with regular Torch installations.
 
 The Discord bot connection is the primary delivery method. Webhooks are fallback-only and are not needed for normal chat, commands, embeds, or server notifications.
