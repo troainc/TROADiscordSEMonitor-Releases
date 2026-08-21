@@ -15,7 +15,7 @@
   <UseNicks>true</UseNicks>
   <BotToGame>false</BotToGame>
   <ServerToDiscord>true</ServerToDiscord>
-  <ServerName>YOUR SERVER NAME</ServerName>
+  <ServerName>TROA NX Asgard PvEPvP</ServerName>
   <StatusChannelId></StatusChannelId>
   <Starting>Server is starting up.</Starting>
   <Started>Server is online.</Started>
@@ -84,15 +84,15 @@
   <AdvertisementIntervalSeconds>1800</AdvertisementIntervalSeconds>
   <AdvertisementChannelId></AdvertisementChannelId>
   <AdvertisementWebhookUrl></AdvertisementWebhookUrl>
-  <AdvertisementAuthor>Server Administration</AdvertisementAuthor>
+  <AdvertisementAuthor>TROA</AdvertisementAuthor>
   <AdvertisementColor>Green</AdvertisementColor>
   <DiscordAdvertisements>
-    <string>Welcome to your Space Engineers server.</string>
-    <string>Join our Discord community for server news and support.</string>
+    <string>Welcome to TROA - The End World.</string>
+    <string>Join our community Discord for server news and support.</string>
   </DiscordAdvertisements>
   <GameAdvertisements>
-    <string>Welcome to your Space Engineers server.</string>
-    <string>Join our Discord community for server news and support.</string>
+    <string>Welcome to TROA - The End World.</string>
+    <string>Join our community Discord for server news and support.</string>
   </GameAdvertisements>
   <UseStartupProgress>true</UseStartupProgress>
   <StartupProgressChannelId></StartupProgressChannelId>
@@ -116,18 +116,26 @@
   <DiscordPresenceShowPlayerNames>true</DiscordPresenceShowPlayerNames>
   <DiscordPresenceUpdateSeconds>30</DiscordPresenceUpdateSeconds>
   <StatusTimeZoneId></StatusTimeZoneId>
-  <EnableStatusDashboard>false</EnableStatusDashboard>
+  <EnableStatusDashboard>true</EnableStatusDashboard>
   <StatusDashboardChannelId></StatusDashboardChannelId>
   <StatusDashboardIntervalMinutes>30</StatusDashboardIntervalMinutes>
   <StatusDashboardAcceptCommands>false</StatusDashboardAcceptCommands>
-  <ConnectWebsiteUrl>https://your-server-website.example</ConnectWebsiteUrl>
-  <ConnectSupportUrl>https://your-support-site.example</ConnectSupportUrl>
-  <ConnectSupportEmail>admin@example.com</ConnectSupportEmail>
+  <EnableGridComplianceWarnings>true</EnableGridComplianceWarnings>
+  <GridComplianceLogChannelId>PASTE_PRIVATE_ADMIN_CHANNEL_ID_HERE</GridComplianceLogChannelId>
+  <GridComplianceNotificationSeconds>15</GridComplianceNotificationSeconds>
+  <GridComplianceMinimumBlocks>25</GridComplianceMinimumBlocks>
+  <GridComplianceNotificationFormat>New grid detected. Before cleanup, add a beacon, build at least {blocks} blocks, and rename it to {factiontag}-{gridname}. Non-compliant grids will be removed during cleanup.</GridComplianceNotificationFormat>
+  <GridComplianceAuditFormat>[Grid Compliance] Warning sent to {p} (Keen: {keenid}) for grid {grid} (ID: {gridid}). Requirements: beacon, {blocks} blocks, name {factiontag}-{gridname}.</GridComplianceAuditFormat>
+  <ConnectWebsiteUrl>https://therealmsofasgard.com</ConnectWebsiteUrl>
+  <ConnectSupportUrl>https://tickets.therealmsofasgard.com</ConnectSupportUrl>
+  <ConnectSupportEmail>help@therealmsofasgard.com</ConnectSupportEmail>
   <ServerPort>0</ServerPort>
   <EnableEssentialsRestartTracking>true</EnableEssentialsRestartTracking>
   <EssentialsConfigPath></EssentialsConfigPath>
   <EnableVoting>true</EnableVoting>
-  <SpaceEngineersVotePageUrl>PASTE_PUBLIC_SERVER_LIST_URL_HERE</SpaceEngineersVotePageUrl>
+  <!-- Leave blank to allow !votelink and !reward in ChatChannelId, or set a player-facing voting channel. -->
+  <VotingCommandChannelId></VotingCommandChannelId>
+  <SpaceEngineersVotePageUrl>https://space-engineers.com/server/244351/</SpaceEngineersVotePageUrl>
   <SpaceEngineersVoteApiKey></SpaceEngineersVoteApiKey>
   <VoteStatisticsRefreshMinutes>3</VoteStatisticsRefreshMinutes>
   <VoteRewardTorchCommand></VoteRewardTorchCommand>
