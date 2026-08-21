@@ -126,6 +126,9 @@
   <GridComplianceMinimumBlocks>25</GridComplianceMinimumBlocks>
   <GridComplianceNotificationFormat>New grid detected. Before cleanup, add a beacon, build at least {blocks} blocks, and rename it to {factiontag}-{gridname}. Non-compliant grids will be removed during cleanup.</GridComplianceNotificationFormat>
   <GridComplianceAuditFormat>[Grid Compliance] Warning sent to {p} (Keen: {keenid}) for grid {grid} (ID: {gridid}). Requirements: beacon, {blocks} blocks, name {factiontag}-{gridname}.</GridComplianceAuditFormat>
+  <GridComplianceReminderMinutes>30</GridComplianceReminderMinutes>
+  <GridComplianceCheckMinutes>5</GridComplianceCheckMinutes>
+  <GridComplianceReminderFormat>Grid reminder: before cleanup, add a beacon, build at least {blocks} blocks, and rename your grid to FACTIONTAG-GridName.</GridComplianceReminderFormat>
   <ConnectWebsiteUrl>https://therealmsofasgard.com</ConnectWebsiteUrl>
   <ConnectSupportUrl>https://tickets.therealmsofasgard.com</ConnectSupportUrl>
   <ConnectSupportEmail>help@therealmsofasgard.com</ConnectSupportEmail>
@@ -135,6 +138,25 @@
   <EnableVoting>true</EnableVoting>
   <!-- Leave blank to allow !votelink and !reward in ChatChannelId, or set a player-facing voting channel. -->
   <VotingCommandChannelId></VotingCommandChannelId>
+  <EnablePlayerSelfLinking>true</EnablePlayerSelfLinking>
+  <PlayerLinkCodeMinutes>10</PlayerLinkCodeMinutes>
+  <PlayerDiscordSteamMappings />
+  <PlayerRulesMessage>Follow server rules, respect other players, and keep grids compliant before cleanup.</PlayerRulesMessage>
+  <PlayerDiscordUrl></PlayerDiscordUrl>
+  <EnablePlayerWelcome>true</EnablePlayerWelcome>
+  <PlayerWelcomeNotification>Welcome! Use Discord for rules, support, voting, and account linking. New grids need a beacon, 25 blocks, and a FACTIONTAG-GridName name before cleanup.</PlayerWelcomeNotification>
+  <EnableVoteLeaderboard>true</EnableVoteLeaderboard>
+  <VoteLeaderboardCount>10</VoteLeaderboardCount>
+  <VoteRewardCooldownHours>24</VoteRewardCooldownHours>
+  <EnableHealthAlerts>true</EnableHealthAlerts>
+  <HealthAlertChannelId></HealthAlertChannelId>
+  <HealthAlertCheckMinutes>5</HealthAlertCheckMinutes>
+  <HealthAlertCooldownMinutes>30</HealthAlertCooldownMinutes>
+  <HealthAlertMinimumDiskGb>20</HealthAlertMinimumDiskGb>
+  <HealthAlertMinimumSimSpeed>0.6</HealthAlertMinimumSimSpeed>
+  <HealthAlertSaveStaleMinutes>45</HealthAlertSaveStaleMinutes>
+  <BackupDirectory></BackupDirectory>
+  <BackupListCount>10</BackupListCount>
   <SpaceEngineersVotePageUrl>https://space-engineers.com/server/244351/</SpaceEngineersVotePageUrl>
   <SpaceEngineersVoteApiKey></SpaceEngineersVoteApiKey>
   <VoteStatisticsRefreshMinutes>3</VoteStatisticsRefreshMinutes>
