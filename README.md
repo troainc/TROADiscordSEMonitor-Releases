@@ -1,364 +1,160 @@
 # TROADiscordSEMonitor
 
-## About This Project
+`TROADiscordSEMonitor` is a Torch plugin for Space Engineers that bridges Discord and the server, reports live status, supports player voting and account linking, and gives administrators safe monitoring tools.
 
-TROADiscordSEMonitor was built from the ground up to replace the outdated SEDiscordBot solution with a reliable, modern Discord bridge for Space Engineers Torch servers. Significant development time has gone into this plugin.
-
-Feature requests are welcome and help guide future development. Please do not reupload, redistribute, or attempt to modify the plugin without TROAINC's prior written consent. The monitor is designed as a foundation that may also support additional game-server platforms in the future.
-
-## Discord Bot Required
-
-You must create a Discord application and bot before installing this plugin. Add that bot to your Discord server, enable its **Message Content Intent**, and enter its bot token and channel IDs in the plugin configuration. The monitor cannot send notifications, relay chat, or process Discord commands without a configured bot.
-
-## Platform Support
-
-TROADiscordSEMonitor supports both of these Torch hosting environments:
-
-- **Windows:** Standard Windows-based Torch dedicated servers.
-- **Linux/Wine:** AMP-managed Linux hosts running Torch through Wine.
-
-Install the same plugin ZIP in Torch on either platform. Each server needs a compatible Torch and Space Engineers version, outbound HTTPS access on TCP port `443`, and its own Discord bot configuration.
-
-## Copyright and License
-
-Copyright (c) 2026 TROAINC. All Rights Reserved.
-
-TROADiscordSEMonitor is proprietary software. No use, copying, modification, redistribution, reverse engineering, decompilation, or derivative work is permitted without TROAINC's prior written consent. See `LICENSE` for the full terms.
-
-Fork requests must be emailed to `odin@therealmsofasgard.com` with the reason
-for the request and why a fork is needed. Forking is prohibited unless
-TROAINC provides prior written approval; TROAINC may deny any request.
+It targets **.NET Framework 4.8** and uses **C# 5-compatible** code.
 
 ## Features
 
-- Two-way global chat relay between Space Engineers and Discord.
-- Server starting, online, restart, and shutdown notifications.
-- Player join/leave notices with Steam ID, Keen ID, and player count.
-- Discord bot card with player count, player names, and simulation speed.
-- Native Discord embeds for commands, output, server status, and the live server card.
-- Remote Torch and compatible installed-plugin commands from a private Discord admin channel.
-- Save notifications that distinguish automatic saves from Discord-admin requested saves.
-- Save-first scheduled restarts, countdowns, and cancellation.
-- Rotating Discord and in-game advertisements.
-- One persistent `!seserver` dashboard card that updates every 30 minutes instead of creating channel clutter.
-- CPU, memory, world size, sim speed, players, restart information, join address, and player-to-server latency.
-- Essentials restart schedule detection.
-- Space Engineers Server List voting, statistics, and optional reward claims.
-
-## Requirements
-
-- A working Torch Space Engineers server.
-- A Discord bot application and bot token.
-- Discord **Message Content Intent** enabled for the bot.
-- Bot permissions: **View Channel**, **Read Message History**, and **Send Messages**.
-- Outbound HTTPS/TCP port `443` from the server or AMP container.
+- Discord ↔ in-game chat forwarding, faction channels, webhooks, advertisements, and player join/leave notices.
+- Lifecycle status, startup progress, save notifications, Discord presence, and a persistent live-server dashboard.
+- Correct Discord Gateway reconnect handling: reconnecting Discord while the Torch session is already loaded reports the server as online and does not replay a stale `Server is starting up.` message.
+- Center-screen grid-compliance warnings for newly created grids, with reminders and a Discord audit log.
+- Player-facing Discord commands for rules, support, server status, voting, rewards, account linking, and top voters.
+- Secure player self-linking: a player confirms a short code shown only in-game before Discord and Steam are linked. Player links never grant administrator access.
+- Vote rewards with a configurable cooldown and saved vote history/leaderboard.
+- Health alerts for low simulation speed, low disk space, and stale save activity.
+- Administrator tools for dashboard refresh, grid review, online player lookup, backup browsing, restore requests, announcements, saving, restarts, and command auditing.
+- Optional Essentials restart tracking. The plugin's own restart scheduler is **off by default** for new configurations.
 
 ## Installation
 
-1. Stop the Space Engineers server.
-2. Upload `TROADiscordSEMonitor.zip` to the Torch plugin area. Do not extract it.
-3. Start Torch once so it creates `TROADiscordSEMonitor.cfg` in plugin storage.
-4. Stop the server, add the bot token, channel IDs, administrator mappings, and optional service settings.
-5. Start the server, or use `!reload` after later configuration changes.
-6. Run `!bridge-id` in Discord to confirm the bot can see the channel and to obtain its IDs.
+1. Install the plugin package into Torch's plugin directory.
+2. Start Torch once so it creates `TROADiscordSEMonitor.cfg`.
+3. Stop the server and edit the configuration file.
+4. Set at least `BotToken`, `ChatChannelId`, `CommandChannelId`, and the status/admin channel IDs you use.
+5. Start Torch and use `!bridge-id` in a visible Discord channel to obtain channel and user IDs.
 
-The plugin ZIP must contain exactly these root-level files:
+The package includes `TROADiscordSEMonitor.cfg.example` as a safe starting point. Do not publish a live `.cfg`: it contains the bot token and may contain vote-service credentials.
 
-- `TROADiscordSEMonitor.dll`
-- `manifest.xml`
+## Player Commands
 
-## Core Configuration
-
-| Setting | Purpose |
-| --- | --- |
-| `BotToken` | Discord bot token. Keep it private. |
-| `ServerName` | Name used in embeds, announcements, and bot messages. |
-| `ChatChannelId` | Main two-way game chat channel. |
-| `StatusChannelId` | Server lifecycle notification channel; falls back to chat. |
-| `CommandChannelId` | Private command channel; multiple IDs may be comma-separated. |
-| `AdminLogChannelId` | Detailed player and command audit channel; it can accept commands. |
-| `CommandPrefix` | Command prefix, normally `!`. |
-| `Embed` | Enables native Discord embeds for responses. |
-| `StatusTimeZoneId` | Timezone for status and `{ts}` timestamps. Use `Eastern Standard Time` for US Eastern. |
-| `ReconnectDelaySeconds` | Discord reconnect delay after a network interruption. |
-
-Run this helper in any visible Discord channel:
-
-```text
-!bridge-id
-```
-
-It reports the Discord channel ID and your Discord user ID. It does not grant access.
-
-## Administrator Access
-
-Keep command channels private. Only trusted administrators should run remote Torch commands.
-
-Administrator access can be verified by matching the sender's Discord user ID to their 64-bit Steam ID. This dual-identity check adds a security layer: a Discord account alone does not authorize remote server commands unless its mapped Steam ID is also approved in the configuration.
-
-### Recommended Direct Discord Access
-
-```xml
-<AdminDiscordUserIds>
-  <string>YOUR_DISCORD_USER_ID</string>
-</AdminDiscordUserIds>
-```
-
-### Discord-to-Steam Mapping
-
-```xml
-<DiscordSteamMappings>
-  <string>DISCORD_USER_ID:STEAM_ID_64</string>
-</DiscordSteamMappings>
-```
-
-For administrator command access, the matching Steam ID must also be in `AdminSteamIds`, unless direct Discord access is used. Discord-to-Steam mappings are required for `!reward`, because vote rewards use the player’s Steam identity.
-
-## Discord Commands
-
-### Server and Bridge
+Player commands can be used in `VotingCommandChannelId`. When that value is blank, they use `ChatChannelId`. They are also accepted in the configured command/admin channel.
 
 | Command | Description |
 | --- | --- |
-| `!troasediscordhelp` | Shows the monitor command guide in Discord. |
-| `!status` | Posts a detailed one-time server health embed. |
-| `!seserver` | Immediately refreshes the single persistent server dashboard card. |
-| `!votelink` | Posts the public Space Engineers Server List vote page. |
-| `!reward` | Checks the caller’s mapped Discord ID for an eligible vote and runs the configured reward command. |
-| `!announce <message>` | Sends an announcement to Discord and in-game. |
-| `!addadmin <discord-id>:<steam-id-64>` | Adds an administrator and saves configuration. |
-| `!addadmin <discord-id> <steam-id-64>` | Space-separated version of `!addadmin`. |
-| `!removeadmin <discord-id>` | Removes administrator command access. |
-| `!addport <game-port>` | Saves the Space Engineers port for the join address. |
-| `!reload` | Reloads config and reconnects Discord without restarting Torch. |
-| `!bridge-id` | Shows Discord IDs for setup verification. |
+| `!server`, `!status`, `!online` | Show server state, player count, and simulation speed. |
+| `!rules` | Show `PlayerRulesMessage`. |
+| `!discord` | Show `PlayerDiscordUrl`. |
+| `!support` | Show the configured support URL and email. |
+| `!votelink` | Show the configured Space Engineers vote page. |
+| `!reward` | Verify and claim a vote reward for the linked Steam account. |
+| `!link <Steam-ID-64>` | Start self-linking while that Steam player is online in-game. |
+| `!link confirm <code>` | Confirm the one-time code displayed only to the player in-game. |
+| `!topvoters` | Show the saved vote-reward leaderboard. |
 
-### Saves and Restarts
+`!reward` is a player command; a player does **not** need administrator access. Rewards require either a player self-link or an administrator-created mapping in `PlayerDiscordSteamMappings`.
+
+## Administrator Commands
+
+Administrator commands require either a Discord ID in `AdminDiscordUserIds` or a `DiscordSteamMappings` entry whose Steam ID is also in `AdminSteamIds`. A player mapping alone never grants administrator access.
 
 | Command | Description |
 | --- | --- |
-| `!save` | Requests a Torch save and reports completion. |
-| `!restartin <minutes> [reason]` | Schedules a save-first restart. |
-| `!cancelrestart` | Cancels the monitor’s scheduled restart. |
+| `!troasediscordhelp` | Show the command list in Discord. |
+| `!seserver` | Refresh the live server dashboard card. |
+| `!gridstatus` | List tracked grids that still need compliance work. |
+| `!playerlookup <name-or-steam-id>` | Show the IDs for an online player. |
+| `!backups` | List recent folders in `BackupDirectory`. |
+| `!backupinfo <backup-name>` | Show the selected backup's size and timestamp. |
+| `!restorerequest <backup-name>` | Record a manual restore request; it never changes files. |
+| `!announce <message>` | Send an announcement to Discord and in-game. |
+| `!save` | Forward a world-save request to Torch. |
+| `!restartin <minutes> [reason]` | Schedule a save-first restart. |
+| `!cancelrestart` | Cancel a scheduled restart. |
+| `!addadmin <discord-id>:<steam-id-64>` | Add a Discord administrator mapping. |
+| `!removeadmin <discord-id>` | Remove a Discord administrator mapping. |
+| `!addport <game-port>` | Save the game port used by the dashboard. |
+| `!reload` | Reload the plugin configuration and reconnect Discord. |
+| `!bridge-id` | Return the current Discord channel ID and caller's Discord user ID. |
 
-### Torch and Plugin Commands
+Permitted Torch commands can also be forwarded through Discord. Use `AllowedTorchCommands` to restrict them, or set `AllowAnyTorchCommand` only when that is intentional.
 
-Authorized administrators can run Torch commands and commands exposed by compatible installed Torch plugins.
+## Grid Compliance
 
-```text
-!lag inspect
-!gridbackup list 76561198000000000
-!gridbackup find "Grid Name"
-!restart
+When `EnableGridComplianceWarnings` is enabled, the plugin watches newly created grids. It sends the builder a centered in-game message explaining the requirements before the server's normal cleanup:
+
+- a beacon;
+- at least `GridComplianceMinimumBlocks` blocks (default: 25); and
+- a name in the form `FACTIONTAG-GridName`.
+
+It sends periodic reminders until the grid becomes compliant and writes an audit message containing the player name, Keen identity, grid name, and grid ID to `GridComplianceLogChannelId` (or `AdminLogChannelId` when blank). The monitor does **not** delete grids; the server's cleanup system remains responsible for deletion.
+
+## Voting and Account Linking
+
+Set these values to enable voting:
+
+- `EnableVoting`
+- `SpaceEngineersVotePageUrl`
+- `SpaceEngineersVoteApiKey`
+- `VoteRewardTorchCommand`
+- `VotingCommandChannelId` (optional; falls back to `ChatChannelId`)
+
+Use `{steamid}` in `VoteRewardTorchCommand` where the configured Torch reward command expects the player Steam ID. `VoteRewardCooldownHours` defaults to 24. Successful claims are stored under the plugin storage directory and power `!topvoters`.
+
+For self-linking, leave `EnablePlayerSelfLinking` enabled and set `PlayerLinkCodeMinutes` as needed. The player must be online in-game for the code to be displayed. Links are stored in `PlayerDiscordSteamMappings`, separate from administrator mappings.
+
+## Monitoring and Alerts
+
+### Persistent Dashboard
+
+Set `EnableStatusDashboard` and `StatusDashboardChannelId` to maintain a single live status card. It refreshes during startup/shutdown, player joins/leaves, and at `StatusDashboardIntervalMinutes`. Set `StatusDashboardAcceptCommands` to allow commands in that channel.
+
+### Health Alerts
+
+When `EnableHealthAlerts` is enabled, the plugin checks at `HealthAlertCheckMinutes` intervals and alerts `HealthAlertChannelId` (or `AdminLogChannelId` when blank) for:
+
+- simulation speed below `HealthAlertMinimumSimSpeed`;
+- disk space below `HealthAlertMinimumDiskGb`; and
+- a save not observed within `HealthAlertSaveStaleMinutes`.
+
+`HealthAlertCooldownMinutes` limits repeat alerts. A plugin cannot send a Discord alert after the server process itself has crashed; external process monitoring is required for that situation.
+
+### Backups
+
+Set `BackupDirectory` to the parent folder containing backup directories and use `BackupListCount` to limit results. `!backups` and `!backupinfo` are read-only. `!restorerequest` only logs an administrative request—it does not copy, restore, or delete any world files.
+
+## Restart Behavior
+
+`EnableRestartScheduler` defaults to `false` for **newly generated** configurations. Existing configurations keep their explicit setting.
+
+When `EnableRestartScheduler=false`, the plugin does not create its automatic restart timer. The reconnect-status fix only prevents incorrect startup messages after a Discord Gateway reconnect; it does not cause or suppress server restarts.
+
+Manual administrator restarts through `!restartin` are separate from the automatic scheduler and save the world first.
+
+## Important Configuration Groups
+
+| Area | Key settings |
+| --- | --- |
+| Discord bridge | `BotToken`, `ChatChannelId`, `CommandChannelId`, `CommandPrefix`, webhooks, chat formats |
+| Status | `UseStatus`, `StatusChannelId`, startup-progress values, `UseDiscordPresence` |
+| Player notices | `UsePlayerStatus`, `PlayerStatusChannelId`, `UseAdminPlayerLog`, `AdminLogChannelId` |
+| Dashboard | `EnableStatusDashboard`, `StatusDashboardChannelId`, `StatusDashboardIntervalMinutes` |
+| Compliance | `EnableGridComplianceWarnings`, `GridComplianceLogChannelId`, block/check/reminder settings |
+| Player experience | `PlayerRulesMessage`, `PlayerDiscordUrl`, `ConnectSupportUrl`, `EnablePlayerWelcome` |
+| Voting | `EnableVoting`, vote URL/API key, reward command, cooldown, leaderboard settings |
+| Health | `EnableHealthAlerts`, alert channel, speed/disk/save thresholds and cooldown |
+| Backups | `BackupDirectory`, `BackupListCount` |
+| Administration | administrator IDs/mappings, allowed Torch commands, command audit settings |
+| Restarts | `EnableRestartScheduler`, restart timing/messages, Essentials tracking |
+
+When a configuration from an earlier version is loaded, the plugin adds missing new settings while retaining existing values. Review the generated `.cfg` after upgrading and fill in any new blank channel paths, URLs, or credentials.
+
+## Security Notes
+
+- Treat `BotToken` and `SpaceEngineersVoteApiKey` as secrets. Never commit or upload a live configuration.
+- Keep `AdminDiscordUserIds`, `AdminSteamIds`, and `DiscordSteamMappings` restricted to trusted staff.
+- Use `PlayerDiscordSteamMappings` for ordinary player reward links; it does not grant administrative access.
+- Restrict `AllowedTorchCommands` and avoid enabling `AllowAnyTorchCommand` unless you understand the risk.
+- Backup tools are intentionally non-destructive; restoring a world remains a manual server-owner procedure.
+
+## Build
+
+The included build script produces the private test package without copying any live configuration:
+
+```powershell
+.\build.ps1
 ```
 
-Commands must use the exact syntax required by the installed plugin. Output returns to the same Discord command channel. Set `AllowAnyTorchCommand` to `false` to limit remote use to root command names in `AllowedTorchCommands`.
+The build requires Torch references and Space Engineers runtime dependencies. See `PROJECT.md` for the configured local dependency locations.
 
-### Command Audit Trail
-
-Every command received from Discord is recorded in the configured audit channel so server owners and administrators have a clear operational history. The audit entry identifies the Discord user who issued the command, the command text, when it was requested, and whether Torch or the target plugin accepted, rejected, returned output for, or could not find the command.
-
-This provides accountability for remote administration: owners can verify saves, restarts, grid restores, profiling actions, and other administrative work without relying on memory or guessing who ran what. Keep `AdminCommandAuditChannelId` private and limit access to trusted staff, because its history may include sensitive operational details.
-
-## Persistent `!seserver` Dashboard
-
-Set `EnableStatusDashboard` to `true` to enable the main server card.
-
-| Setting | Purpose |
-| --- | --- |
-| `StatusDashboardChannelId` | Channel that holds the persistent dashboard. |
-| `StatusDashboardIntervalMinutes` | Refresh interval; default is `30` minutes. |
-| `StatusDashboardAcceptCommands` | Allows authorized commands in the dashboard channel. |
-| `ConnectWebsiteUrl` | Website shown in the dashboard's **CONNECT & SUPPORT** section. |
-| `ConnectSupportUrl` | Support or ticket URL shown in the dashboard's **CONNECT & SUPPORT** section. |
-| `ConnectSupportEmail` | Administrator/support email shown in the dashboard's **CONNECT & SUPPORT** section. |
-| `ServerPort` | Space Engineers port used in the join address. Use `!addport` to set it. |
-
-The plugin creates the card once, saves the Discord message ID in plugin storage, then edits the same message every update. `!seserver` refreshes that same card immediately. If the original message is deleted, the bot creates and tracks a replacement.
-
-The **CONNECT & SUPPORT** section is editable through `ConnectWebsiteUrl`, `ConnectSupportUrl`, and `ConnectSupportEmail`. Leave a field empty to display `not configured` instead of publishing an incorrect link or email.
-
-## Lifecycle Notifications
-
-With `UseStatus` enabled, the monitor posts configured starting, online, restarting, and offline messages to `StatusChannelId` (or `ChatChannelId` when no status channel is set). The offline message is sent directly during normal Torch/AMP shutdown so it is delivered before the plugin is unloaded. A hard process kill, host crash, or network outage cannot send a final offline notice.
-
-The card includes:
-
-- Players online and daily unique players; daily count resets at midnight in `StatusTimeZoneId`.
-- Simulation speed normalized to a maximum of `1.00`.
-- Process CPU, memory, and world size.
-- Server start time, last observed save, and four-hour restart-cycle reminder.
-- Next monitor-scheduled restart or the next Essentials restart, whichever is sooner.
-- Public join address and game port.
-- Live player-to-server latency average, range, and sample count.
-- Host, operating system, AMP/Linux/Wine detection, and timezone.
-- Voting and rewards directly above **CONNECT & SUPPORT**.
-- TROA website, support website, and administrator email.
-- Torch version/build and the Space Engineers server's live AppVersion at the bottom of the card; Steam news is the fallback while the server is loading.
-
-### Player-to-Server Ping
-
-This is not an external internet ping test. The monitor reads live round-trip latency samples from the Space Engineers replication layer, so it represents connected players’ actual latency to the game server. It can show `waiting for live server data` or `not available` until the dedicated server exposes samples.
-
-## Detailed `!status` Embed
-
-`!status` is separate from the persistent dashboard. It posts a full on-demand health embed in the channel where it was run.
-
-It reports Torch state/build, uptime, players, sim speed, CPU, memory, world size, free disk space, last save, world path, host details, network information, public IP, and timezone.
-
-The color reflects sim speed:
-
-- **Green:** `0.90` to `1.00`
-- **Yellow:** `0.50` to `0.89`
-- **Red:** below `0.50`
-
-## Essentials Restart Tracking
-
-When `EnableEssentialsRestartTracking` is true, the dashboard reads Essentials `AutoCommands` and finds the next restart. It supports recurring `Timed` schedules and fixed-time `Scheduled` schedules, including warning-step delays.
-
-| Setting | Purpose |
-| --- | --- |
-| `EnableEssentialsRestartTracking` | Enables Essentials restart detection. |
-| `EssentialsConfigPath` | Full Wine-visible path to `Essentials.cfg`; use this if automatic discovery fails. |
-
-Run `!reload` after changing the Essentials path.
-
-## Voting and Rewards
-
-Voting uses the official Space Engineers Server List API. Keep its API key only in the server’s plugin configuration.
-
-| Setting | Purpose |
-| --- | --- |
-| `EnableVoting` | Enables voting commands and dashboard information. |
-| `SpaceEngineersVotePageUrl` | Public page opened by `!votelink`. |
-| `SpaceEngineersVoteApiKey` | Private API key used for statistics and vote claim checks. Never post it in Discord. |
-| `VoteStatisticsRefreshMinutes` | Statistics cache interval. The server-list service caches data for about three minutes. |
-| `VoteRewardTorchCommand` | Optional Torch/plugin command executed after a valid vote. |
-
-The card shows rank, votes, score, uptime, favorites, a clickable vote link, and a `!reward` reminder.
-
-### Reward Flow
-
-1. The player votes using `!votelink`.
-2. The player runs `!reward` in a configured command-enabled channel.
-3. The monitor checks the player’s Discord ID with the server-list API.
-4. If an unclaimed vote exists, the monitor runs `VoteRewardTorchCommand`.
-5. Only after that command succeeds does the monitor mark the vote as claimed.
-
-`VoteRewardTorchCommand` supports:
-
-| Placeholder | Value |
-| --- | --- |
-| `{steamid}` | Mapped player’s 64-bit Steam ID. |
-| `{discordid}` | Player’s Discord user ID. |
-| `{player}` | Player’s Discord display name. |
-
-Leave `VoteRewardTorchCommand` blank while planning rewards. In that state, `!reward` confirms an eligible vote but does not mark it claimed or grant anything.
-
-## Chat, Players, and Bot Card
-
-### Chat Relay
-
-- `ServerToDiscord` relays in-game global chat to Discord.
-- `BotToGame` relays Discord messages to the game.
-- `Format` controls game-to-Discord text; use `{p}` for player and `{msg}` for message.
-- `Format2` controls the Discord sender label shown in-game.
-
-### Player Notifications
-
-Set `UsePlayerStatus` to true to post join/leave messages. Use `PlayerStatusChannelId`, or leave it blank to use the status/chat channel. `UseAdminPlayerLog` sends the detailed record to `AdminLogChannelId`.
-
-| Placeholder | Meaning |
-| --- | --- |
-| `{p}` or `{player}` | Player name. |
-| `{steamid}` | 64-bit Steam ID. |
-| `{keenid}` | Keen identity ID when available. |
-| `{count}` | Current online player count. |
-
-### Player Identity Management
-
-The admin connection log gives server owners a current identity record whenever a player joins or leaves. Each entry can include the player name, **Steam ID**, **Keen ID**, and current player count, so staff can investigate incidents with the identifiers that matter instead of relying only on display names.
-
-- **Steam ID:** The player’s 64-bit Steam identifier. Use it as the durable player reference for administration, Discord-to-Steam authorization, bans, rewards, and cross-plugin commands.
-- **Keen ID:** The currently observed Space Engineers identity identifier. Keen IDs can change as player identities are recreated or affected by game/server events, which can make historical investigations difficult. The monitor logs the latest observed Keen ID on each connection so staff can quickly find the player’s current in-game identity.
-- **Discord ID:** The user’s Discord identifier. It is used to verify who issued Discord commands and, when configured with a Discord-to-Steam mapping, provides the extra authorization check for remote administration.
-
-Configure `UseAdminPlayerLog` and `AdminLogChannelId` to keep this information in a private staff channel. Treat these logs as administrative records and restrict channel access to trusted staff.
-
-### Discord Bot Card
-
-Set `UseDiscordPresence` to true to update the Discord bot card.
-
-| Setting | Purpose |
-| --- | --- |
-| `DiscordPresenceFormat` | Activity text; supports `{players}`, `{sim}`, and `{playerlist}`. |
-| `DiscordPresenceShowPlayerNames` | Adds up to four player names when `{playerlist}` is not already in the format. |
-| `DiscordPresenceUpdateSeconds` | Presence refresh interval; minimum is 15 seconds. |
-
-Discord limits the activity to one short line. Steam IDs and Keen IDs are intentionally not shown on the public bot card.
-
-## Saves, Timestamps, and Restarts
-
-Set `UseSaveNotifications` to true for save messages.
-
-| Setting | Purpose |
-| --- | --- |
-| `SaveCommandFormat` | Notice when a Discord admin requests a save. |
-| `SaveCompletedFormat` | Notice for automatic/server saves. |
-| `AdminSaveCompletedFormat` | Notice when a Discord-requested save completes. |
-| `AdminSaveCorrelationSeconds` | Window associating a completed save with the Discord requester. |
-| `EnableAutomaticSaveSchedule` | Enables the monitor’s regular Torch save schedule. |
-| `AutomaticSaveIntervalMinutes` | Minutes between monitor-requested Torch saves; default is `15`. |
-| `SaveCheckIntervalSeconds` | Silent save-file confirmation scan; default is `60` seconds and minimum is 30 seconds. |
-
-The `{ts}` placeholder uses the configured timezone and a readable format such as `8/16/2026 9:54:33 PM EDT`, not a raw `-04:00` offset.
-
-When `EnableAutomaticSaveSchedule` is true, the monitor runs Torch’s `save` command every `AutomaticSaveIntervalMinutes`. The monitor does not post a message every time it scans for a completed save; it only posts the configured completion notice after a save is actually detected. The scan remains in place so automatic saves and Discord-admin saves can be confirmed accurately.
-
-For monitor-managed restarts, use `EnableRestartScheduler`, `RestartMinimumMinutes`, `RestartSaveWaitSeconds`, and the restart message formats.
-
-## Advertisements and Startup Progress
-
-Set `EnableAdvertisements` to true to rotate announcements.
-
-- `DiscordAdvertisements` post to `AdvertisementChannelId` or `ChatChannelId`.
-- `GameAdvertisements` send in-game messages as `AdvertisementAuthor`.
-- `AdvertisementIntervalSeconds` controls the interval; minimum is 60 seconds.
-- `AdvertisementColor` controls the in-game message color.
-
-`UseStartupProgress` posts real Torch lifecycle milestones rather than a guessed loading percentage: bot connected, world loading, and server online. Configure the message percentages through `BotReadyProgressPercent`, `WorldLoadingProgressPercent`, and `OnlineProgressPercent`.
-
-## Webhooks
-
-Native bot posting is primary. `WebhookUrl`, `ChatWebhookUrl`, `StatusWebhookUrl`, and other webhook settings are only fallback options if normal bot posting fails. Webhooks are not required for chat, commands, dashboard updates, or voting.
-
-## Troubleshooting
-
-| Problem | What to Check |
-| --- | --- |
-| Bot is online but ignores commands | Enable Message Content Intent, verify command channel IDs, then use `!bridge-id`. |
-| Command says unauthorized | Check `AdminDiscordUserIds`, `DiscordSteamMappings`, and `AdminSteamIds`, then run `!reload`. |
-| Plugin command is rejected | Confirm it is registered with Torch and uses the exact required arguments. |
-| Dashboard creates a replacement message | The prior persistent message was deleted or is unavailable to the bot. |
-| Dashboard has no public IP | The AMP host cannot reach the public-IP service; hostname/LAN details remain available. |
-| Player-to-server ping is unavailable | Wait for a player sample; the current dedicated-server build may not expose its replication table. |
-| Vote stats say API key not configured | Set `SpaceEngineersVoteApiKey` in the live server config, then run `!reload`. |
-| `!reward` finds no vote | Votes are limited to one per server per IP each day; confirm the Discord account is mapped and wait briefly for the server-list service. |
-| `!reward` grants nothing | Configure `VoteRewardTorchCommand` with a valid Torch/plugin reward command. |
-| Config change does not apply | Run `!reload` as an administrator or restart Torch. |
-
-## Full Configuration Example
-
-Download [`TROADiscordSEMonitor.cfg.example`](TROADiscordSEMonitor.cfg.example) for the complete, formatted configuration template. It includes every supported setting, placeholder values for Discord and Steam IDs, administrator mappings, dashboards, saves, restart tracking, voting, advertisements, and webhook fallback options.
-
-**Before using it:** replace each `PASTE_*` value with your own value. Never publish or share a live bot token, server-list API key, administrator Steam ID, Discord user ID, or live configuration file.
-
-After Torch first creates `TROADiscordSEMonitor.cfg`, you can use this template as a reference or copy its settings into the server's live configuration. Restart Torch or run `!reload` after saving configuration changes.
-
-## Security
-
-- Never publish your Discord bot token or server-list API key.
-- Regenerate exposed secrets in their service dashboards.
-- Keep `CommandChannelId` private.
-- Give administrator mappings only to trusted staff.
-- Treat `AllowAnyTorchCommand` and `VoteRewardTorchCommand` as powerful server-administration settings.
