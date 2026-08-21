@@ -134,7 +134,7 @@
   <UseAdminCommandAudit>true</UseAdminCommandAudit>
   <AdminCommandAuditChannelId></AdminCommandAuditChannelId>
   <AdminCommandAuditFormat>[Command Audit] {p} ran {cmd}. {result} ({ts})</AdminCommandAuditFormat>
-  <EnableRestartScheduler>true</EnableRestartScheduler>
+  <EnableRestartScheduler>false</EnableRestartScheduler>
   <RestartMinimumMinutes>1</RestartMinimumMinutes>
   <RestartSaveWaitSeconds>5</RestartSaveWaitSeconds>
   <RestartScheduledFormat>Restart scheduled by {p} in {minutes} minute(s). {reason}</RestartScheduledFormat>
