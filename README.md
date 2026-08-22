@@ -151,7 +151,7 @@ All supported commands are also available as slash commands. Use the configured 
 - Keep `AllowedTorchCommands` small and only grant administrator mappings to trusted staff.
 - Full backups remain on the server. Download them through AMP or your host's file manager.
 
-## Private Build
+## Public Release Contents
 
-This private source repository produces release packages with `build.ps1`; the output ZIP is written under `release`. Public releases contain the plugin package and documentation only—never source code, live configuration files, or credentials.
+This public repository contains release packages and documentation only. It does not contain private source code, live configuration files, bot tokens, voting API keys, webhooks, or other credentials.
 
