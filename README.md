@@ -32,8 +32,10 @@ Built for **.NET Framework 4.8** and **C# 5-compatible** Torch environments.
 
 ### World Protection and Privacy
 
-- **Grid-compliance monitoring** checks new player grids for a beacon, required block count (25 by default), and `FACTIONTAG-GridName` naming.
-- **Centered in-game reminder** tells the owner exactly what must be corrected before cleanup. Warning delivery is logged for staff.
+- **Grid-compliance monitoring** checks new player grids for a placed beacon, required placed block count (25 by default), and `FACTIONTAG-GridName` naming.
+- **One teal centered in-game notice** tells the owner what must be corrected before cleanup. It is sent only once per newly tracked non-compliant grid.
+- **Five-minute follow-up checks** keep monitoring non-compliant grids. Still-failing grids receive a teal in-game chat reminder and a staff audit entry every five minutes by default.
+- **Player grid checks:** players can type `!gridcheck` or `!gridcheck help` in Space Engineers chat to inspect only their major-owned grids. These are native Torch in-game commands and do not depend on Discord command forwarding.
 - **NPC-safe by design:** NPC-created grids are excluded from player compliance reminders.
 - **Staff compliance reports** list tracked grids and allow audit-log output to be enabled, disabled, or checked.
 - **Private chat protection:** faction, direct/private, `/f`, and `./f` messages are never posted to Discord. They are retained in the Torch/server log only.
@@ -115,6 +117,15 @@ All supported commands are also available as slash commands. Use the configured 
 | `!link <steam-id-64>` | Starts Discord-to-Steam account linking. |
 | `!link confirm <code>` | Confirms the short code shown to the player in-game. |
 
+## In-Game Grid Compliance Commands
+
+These commands are typed in **Space Engineers game chat**. They are available to players and are not Discord or slash commands.
+
+| Command | What it does |
+| --- | --- |
+| `!gridcheck` | Checks the caller's major-owned grids and reports any missing placed beacon, blocks, or required name format. |
+| `!gridcheck help` | Shows the placed-beacon, 25-block default, and `FACTIONTAG-GridName` requirements. |
+
 ## Owner and Administrator Commands
 
 | Command | What it does |
@@ -122,7 +133,7 @@ All supported commands are also available as slash commands. Use the configured 
 | `!troasediscordhelp` | Shows the complete in-Discord command guide. |
 | `!servercard` | Requests a dashboard refresh; use `/servercard` for the public card. |
 | `!gridstatus` | Lists player grids needing compliance work. |
-| `!gridlog on\|off\|status` | Controls Discord compliance audit output; in-game warnings continue. |
+| `!gridlog on\|off\|status` | Controls Discord compliance audit output for initial notices and five-minute reminders. |
 | `!playerlookup <name-or-steam-id>` | Finds an online player's IDs. |
 | `!backups` | Lists detected backup folders with dates and sizes. |
 | `!backupnow` | Creates a dated snapshot of the loaded world. |
