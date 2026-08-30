@@ -1,5 +1,13 @@
 # TROADiscordSEMonitor Changelog
 
+## v1.1.0J — Discord Access and In-Game Chat Styling
+
+- Removes the administrator Discord-to-Steam mapping requirement for forwarded Torch commands.
+- Keeps player linking separate for player-only features such as vote rewards.
+- Adds owner-configurable Discord-to-game text and highlight colors through `DiscordGameTextColor` and `DiscordGameHighlightColor`.
+- Accepts named, hexadecimal, and RGB highlight colors with a safe teal fallback for invalid values.
+- Automatically adds the new color settings to existing configuration files during startup or reload.
+
 ## v1.1.0 — Discord Operations and Backup Update
 
 **Released:** August 22, 2026  

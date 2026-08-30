@@ -88,6 +88,8 @@ Use a **full Torch restart** after replacing the DLL. `!reload` reloads configur
 | --- | --- | --- |
 | `BotToken` | Yes | Discord bot token. Keep it secret. |
 | `ChatChannelId` | Yes | Public Discord/game chat bridge channel. |
+| `DiscordGameTextColor` | Optional | Space Engineers chat font/color used for Discord messages shown in-game, such as `White`, `Green`, `Blue`, or `Red`. |
+| `DiscordGameHighlightColor` | Optional | Overall Discord-message accent shown in-game. Accepts a color name, `#RRGGBB`, `#RRGGBBAA`, or `R,G,B`; defaults to teal. |
 | `CommandChannelId` | Yes | Discord channel for bot commands. |
 | `AdminDiscordUserIds` | Yes | Discord user IDs allowed to run administrator commands. |
 | `AdminSteamIds` and `DiscordSteamMappings` | Recommended | Links staff Discord identities to Steam identities. |

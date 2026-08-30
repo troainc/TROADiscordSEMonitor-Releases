@@ -3,6 +3,10 @@
   <!-- Required Discord connection and routing -->
   <BotToken>PASTE_A_NEW_DISCORD_BOT_TOKEN_HERE</BotToken>
   <ChatChannelId>PASTE_MAIN_DISCORD_CHANNEL_ID_HERE</ChatChannelId>
+  <!-- Discord-to-game chat styling. TextColor is a Space Engineers chat font name. -->
+  <!-- HighlightColor accepts a name, #RRGGBB, #RRGGBBAA, or R,G,B. Invalid values fall back to teal. -->
+  <DiscordGameTextColor>White</DiscordGameTextColor>
+  <DiscordGameHighlightColor>#00B7C3</DiscordGameHighlightColor>
   <CommandChannelId>PASTE_PRIVATE_ADMIN_CHANNEL_ID_HERE</CommandChannelId>
   <ServerName>Space Engineers</ServerName>
   <StatusChannelId></StatusChannelId>
