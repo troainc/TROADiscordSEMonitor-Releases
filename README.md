@@ -14,7 +14,7 @@ Discord save messages use native Discord timestamps:
 
 - `{ts}` shows the exact save date and time in each viewer's own time zone.
 - `{ts_relative}` shows a localized relative value such as “a few minutes ago.”
-- `SaveNotificationCooldownSeconds` defaults to `300` seconds and collapses duplicate automatic-save detections from the same save cycle. Authorized administrator save confirmations are never suppressed.
+- `SaveNotificationCooldownSeconds` defaults to `300` seconds and collapses duplicate automatic-save detections from the same save cycle. Authorized administrator save confirmations are never suppressed. Increase it (for example, to `3600`) for at most one automatic-save post per hour, or set `UseSaveNotifications=false` to disable save posts.
 
 ## Why Server Owners Use It
 
