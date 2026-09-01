@@ -1,4 +1,15 @@
-# TROADiscordSEMonitor Changelog
+# Monitor+ Changelog
+
+## v1.1.1 — Monitor+ Identity and Save Notification Control
+
+**Released:** September 1, 2026
+
+- Changes the default in-game announcement sender from `TROA` to `Monitor+`.
+- Automatically migrates the legacy `AdvertisementAuthor=TROA` value in existing configurations while preserving custom server-owner names.
+- Makes Discord `{ts}` placeholders render as each viewer's local date and time.
+- Adds `{ts_relative}` for Discord's localized relative time, such as “a few minutes ago.”
+- Adds `SaveNotificationCooldownSeconds` with a 300-second default to suppress duplicate automatic-save messages caused by multiple world files updating during one save.
+- Administrator-requested save confirmations bypass the duplicate-suppression window.
 
 ## v1.1.0J — Discord Access and In-Game Chat Styling
 
