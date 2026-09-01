@@ -9,6 +9,10 @@
   <DiscordGameHighlightColor>#00B7C3</DiscordGameHighlightColor>
   <CommandChannelId>PASTE_PRIVATE_ADMIN_CHANNEL_ID_HERE</CommandChannelId>
   <ServerName>Space Engineers</ServerName>
+  <!-- Player-facing system announcements default to Monitor+; customize if desired. -->
+  <AdvertisementAuthor>Monitor+</AdvertisementAuthor>
+  <!-- Suppresses duplicate automatic-save detections from one save cycle. -->
+  <SaveNotificationCooldownSeconds>300</SaveNotificationCooldownSeconds>
   <StatusChannelId></StatusChannelId>
   <PlayerStatusChannelId></PlayerStatusChannelId>
   <AdminLogChannelId></AdminLogChannelId>
