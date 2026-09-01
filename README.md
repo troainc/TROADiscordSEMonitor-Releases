@@ -1,10 +1,20 @@
-# TROADiscordSEMonitor
+# Monitor+
 
 ## Your Space Engineers Server, Visible and Manageable From Discord
 
 `TROADiscordSEMonitor` is a polished Discord companion for **Torch-powered Space Engineers servers**. It gives players clear server information and self-service tools, while giving owners live operational visibility, backups, safety controls, and auditable administration—without publishing private chat or server credentials.
 
 Built for **.NET Framework 4.8** and **C# 5-compatible** Torch environments.
+
+## Monitor+ In-Game Identity and Save Messages
+
+Player-facing system announcements use **Monitor+** by default. Server owners can still set `AdvertisementAuthor` to any name that fits their community. Existing installations using the old exact value `TROA` are migrated to `Monitor+`; custom values are left untouched.
+
+Discord save messages use native Discord timestamps:
+
+- `{ts}` shows the exact save date and time in each viewer's own time zone.
+- `{ts_relative}` shows a localized relative value such as “a few minutes ago.”
+- `SaveNotificationCooldownSeconds` defaults to `300` seconds and collapses duplicate automatic-save detections from the same save cycle. Authorized administrator save confirmations are never suppressed.
 
 ## Why Server Owners Use It
 
