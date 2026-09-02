@@ -1,35 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <BridgeConfig>
-  <!-- Required Discord connection and routing -->
+  <Enabled>true</Enabled>
   <BotToken>PASTE_A_NEW_DISCORD_BOT_TOKEN_HERE</BotToken>
-  <ChatChannelId>PASTE_MAIN_DISCORD_CHANNEL_ID_HERE</ChatChannelId>
-  <!-- Discord-to-game chat styling. TextColor is a Space Engineers chat font name. -->
-  <!-- HighlightColor accepts a name, #RRGGBB, #RRGGBBAA, or R,G,B. Invalid values fall back to teal. -->
-  <DiscordGameTextColor>White</DiscordGameTextColor>
-  <DiscordGameHighlightColor>#00B7C3</DiscordGameHighlightColor>
+  <ChatChannelId>PASTE_DISCORD_CHANNEL_ID_HERE</ChatChannelId>
+  <PreLoad>true</PreLoad>
+  <LoadRanks>false</LoadRanks>
+  <Embed>false</Embed>
+  <DisplaySteamId>true</DisplaySteamId>
+  <Format>[In-game] **{p}**: {msg}</Format>
+  <Format2>[Discord] {p}</Format2>
   <CommandChannelId>PASTE_PRIVATE_ADMIN_CHANNEL_ID_HERE</CommandChannelId>
-  <ServerName>Space Engineers</ServerName>
-  <!-- Player-facing system announcements default to Monitor+; customize if desired. -->
-  <AdvertisementAuthor>Monitor+</AdvertisementAuthor>
-  <!-- Suppresses duplicate automatic-save detections from one save cycle. -->
-  <SaveNotificationCooldownSeconds>300</SaveNotificationCooldownSeconds>
+  <CommandPrefix>!</CommandPrefix>
+  <AsServer>false</AsServer>
+  <UseNicks>true</UseNicks>
+  <BotToGame>false</BotToGame>
+  <ServerToDiscord>true</ServerToDiscord>
+  <ServerName>TROA NX Asgard PvEPvP</ServerName>
   <StatusChannelId></StatusChannelId>
+  <Starting>Server is starting up.</Starting>
+  <Started>Server is online.</Started>
+  <Stopped>Server is offline.</Stopped>
+  <Restarted>Server is restarting.</Restarted>
+  <StripGPS>false</StripGPS>
+  <Connect>{p} connected.</Connect>
+  <Join>{p} joined.</Join>
+  <Leave>{p} left.</Leave>
+  <SimPing>false</SimPing>
+  <SimChannel></SimChannel>
+  <SimThresh>0.6</SimThresh>
+  <SimMessage>Simulation speed has dropped below threshold.</SimMessage>
+  <SimCooldown>1200</SimCooldown>
+  <UseStatus>true</UseStatus>
+  <StatusInterval>5000</StatusInterval>
+  <StatusPre></StatusPre>
+  <Status>{p} players | SS {ss} | Server Online</Status>
+  <MentOthers>false</MentOthers>
+  <MentEveryone>false</MentEveryone>
+  <TokenVisibleState>Visible</TokenVisibleState>
+  <RemoveResponse>0</RemoveResponse>
+  <FactionChannels />
+  <GlobalColor>Green</GlobalColor>
+  <FacColor>Green</FacColor>
+  <FacFormat>[Faction] **{p}**: {msg}</FacFormat>
+  <FacFormat2>[Discord Faction] {p}</FacFormat2>
+  <CommandPerms />
+  <WebhookUrl></WebhookUrl>
+  <ChatWebhookUrl></ChatWebhookUrl>
+  <StatusWebhookUrl></StatusWebhookUrl>
+  <WebhookUsername>TROA - The End World</WebhookUsername>
+  <UsePlayerStatus>true</UsePlayerStatus>
   <PlayerStatusChannelId></PlayerStatusChannelId>
+  <PlayerStatusWebhookUrl></PlayerStatusWebhookUrl>
+  <PlayerJoinFormat>{p} joined the server. Steam: {steamid} | Keen: {keenid} ({count} online)</PlayerJoinFormat>
+  <PlayerLeaveFormat>{p} left the server. Steam: {steamid} | Keen: {keenid} ({count} online)</PlayerLeaveFormat>
+  <UseAdminPlayerLog>true</UseAdminPlayerLog>
   <AdminLogChannelId></AdminLogChannelId>
-  <StatusDashboardChannelId></StatusDashboardChannelId>
-  <GridComplianceLogChannelId></GridComplianceLogChannelId>
-  <VotingCommandChannelId></VotingCommandChannelId>
-  <HealthAlertChannelId></HealthAlertChannelId>
-
-  <!-- Administrator access and approved remote Torch commands -->
+  <AdminPlayerJoinFormat>[Admin Log] {p} joined. Steam ID: {steamid} | Keen ID: {keenid}. ({count} online)</AdminPlayerJoinFormat>
+  <AdminPlayerLeaveFormat>[Admin Log] {p} left. Steam ID: {steamid} | Keen ID: {keenid}. ({count} online)</AdminPlayerLeaveFormat>
+  <!-- Admin Steam IDs: add each administrator's 64-bit Steam ID here. Add more <string> lines for more admins. -->
   <AdminSteamIds>
-    <string>PASTE_ADMIN_STEAM_ID_64_HERE</string>
+    <string>PASTE_ADMIN_1_STEAM_ID_64_HERE</string>
+    <string>PASTE_ADMIN_2_STEAM_ID_64_HERE</string>
+    <string>PASTE_ADMIN_3_STEAM_ID_64_HERE</string>
   </AdminSteamIds>
+  <!-- Discord Steam mappings: use DISCORD_USER_ID:STEAM_ID_64, or use a Discord ID by itself and keep it in the same list position as that admin's Steam ID above. -->
   <DiscordSteamMappings>
-    <string>PASTE_ADMIN_DISCORD_USER_ID:PASTE_ADMIN_STEAM_ID_64_HERE</string>
+    <string>PASTE_ADMIN_1_DISCORD_USER_ID:PASTE_ADMIN_1_STEAM_ID_64_HERE</string>
+    <string>PASTE_ADMIN_2_DISCORD_USER_ID:PASTE_ADMIN_2_STEAM_ID_64_HERE</string>
+    <string>PASTE_ADMIN_3_DISCORD_USER_ID:PASTE_ADMIN_3_STEAM_ID_64_HERE</string>
   </DiscordSteamMappings>
   <AdminDiscordUserIds>
-    <string>PASTE_ADMIN_DISCORD_USER_ID_HERE</string>
+    <string>PASTE_ADMIN_1_DISCORD_USER_ID</string>
   </AdminDiscordUserIds>
   <AllowedTorchCommands>
     <string>save</string>
@@ -37,24 +78,69 @@
     <string>stop</string>
     <string>start</string>
   </AllowedTorchCommands>
-
-  <!-- Public links and server information -->
+  <TorchCommandPrefix>!</TorchCommandPrefix>
+  <AllowAnyTorchCommand>true</AllowAnyTorchCommand>
+  <EnableAdvertisements>true</EnableAdvertisements>
+  <AdvertisementIntervalSeconds>1800</AdvertisementIntervalSeconds>
+  <AdvertisementChannelId></AdvertisementChannelId>
+  <AdvertisementWebhookUrl></AdvertisementWebhookUrl>
+  <AdvertisementAuthor>Monitor+</AdvertisementAuthor>
+  <AdvertisementColor>Green</AdvertisementColor>
+  <DiscordAdvertisements>
+    <string>Welcome to the server.</string>
+    <string>Join our community Discord for server news and support.</string>
+  </DiscordAdvertisements>
+  <GameAdvertisements>
+    <string>Welcome to TROA - The End World.</string>
+    <string>Join our community Discord for server news and support.</string>
+  </GameAdvertisements>
+  <UseStartupProgress>true</UseStartupProgress>
+  <StartupProgressChannelId></StartupProgressChannelId>
+  <StartupProgressWebhookUrl></StartupProgressWebhookUrl>
+  <StartupProgressFormat>Server startup: {percent}% - {stage}</StartupProgressFormat>
+  <BotReadyProgressPercent>10</BotReadyProgressPercent>
+  <WorldLoadingProgressPercent>60</WorldLoadingProgressPercent>
+  <OnlineProgressPercent>100</OnlineProgressPercent>
+  <UseSaveNotifications>true</UseSaveNotifications>
+  <SaveNotificationChannelId></SaveNotificationChannelId>
+  <SaveNotificationWebhookUrl></SaveNotificationWebhookUrl>
+  <SaveCommandFormat>Save requested by {p} at {ts}.</SaveCommandFormat>
+  <SaveCompletedFormat>Automatic server save completed at {ts}.</SaveCompletedFormat>
+  <AdminSaveCompletedFormat>Save requested by {p} completed at {ts}.</AdminSaveCompletedFormat>
+  <AdminSaveCorrelationSeconds>180</AdminSaveCorrelationSeconds>
+  <SaveCheckIntervalSeconds>60</SaveCheckIntervalSeconds>
+  <SaveNotificationCooldownSeconds>300</SaveNotificationCooldownSeconds>
+  <EnableAutomaticSaveSchedule>true</EnableAutomaticSaveSchedule>
+  <AutomaticSaveIntervalMinutes>15</AutomaticSaveIntervalMinutes>
+  <UseDiscordPresence>true</UseDiscordPresence>
+  <DiscordPresenceFormat>{players} players online | Sim speed {sim}</DiscordPresenceFormat>
+  <DiscordPresenceShowPlayerNames>true</DiscordPresenceShowPlayerNames>
+  <DiscordPresenceUpdateSeconds>30</DiscordPresenceUpdateSeconds>
+  <StatusTimeZoneId></StatusTimeZoneId>
+  <EnableStatusDashboard>false</EnableStatusDashboard>
+  <StatusDashboardChannelId></StatusDashboardChannelId>
+  <StatusDashboardIntervalMinutes>30</StatusDashboardIntervalMinutes>
+  <StatusDashboardAcceptCommands>false</StatusDashboardAcceptCommands>
   <ConnectWebsiteUrl>https://therealmsofasgard.com</ConnectWebsiteUrl>
   <ConnectSupportUrl>https://tickets.therealmsofasgard.com</ConnectSupportUrl>
   <ConnectSupportEmail>help@therealmsofasgard.com</ConnectSupportEmail>
   <ServerPort>0</ServerPort>
+  <EnableEssentialsRestartTracking>true</EnableEssentialsRestartTracking>
   <EssentialsConfigPath></EssentialsConfigPath>
-  <PlayerRulesMessage>Follow server rules, respect other players, and keep grids compliant before cleanup.</PlayerRulesMessage>
-  <PlayerDiscordUrl></PlayerDiscordUrl>
-
-  <!-- Voting and rewards: keep the API key private -->
+  <EnableVoting>true</EnableVoting>
   <SpaceEngineersVotePageUrl>https://space-engineers.com/server/244351/</SpaceEngineersVotePageUrl>
-  <SpaceEngineersVoteApiKey>PASTE_SPACE_ENGINEERS_VOTE_API_KEY_HERE</SpaceEngineersVoteApiKey>
+  <SpaceEngineersVoteApiKey></SpaceEngineersVoteApiKey>
+  <VoteStatisticsRefreshMinutes>3</VoteStatisticsRefreshMinutes>
   <VoteRewardTorchCommand></VoteRewardTorchCommand>
-
-  <!-- Player links are maintained automatically by !link -->
-  <PlayerDiscordSteamMappings />
-
-  <!-- Optional local server path used by the read-only backup commands -->
-  <BackupDirectory></BackupDirectory>
+  <UseAdminCommandAudit>true</UseAdminCommandAudit>
+  <AdminCommandAuditChannelId></AdminCommandAuditChannelId>
+  <AdminCommandAuditFormat>[Command Audit] {p} ran {cmd}. {result} ({ts})</AdminCommandAuditFormat>
+  <EnableRestartScheduler>true</EnableRestartScheduler>
+  <RestartMinimumMinutes>1</RestartMinimumMinutes>
+  <RestartSaveWaitSeconds>5</RestartSaveWaitSeconds>
+  <RestartScheduledFormat>Restart scheduled by {p} in {minutes} minute(s). {reason}</RestartScheduledFormat>
+  <RestartCountdownFormat>Server restart in {minutes} minute(s). {reason}</RestartCountdownFormat>
+  <RestartStartingFormat>Server restart is starting now. Saving the world first. {reason}</RestartStartingFormat>
+  <RestartCancelledFormat>Scheduled restart cancelled by {p}.</RestartCancelledFormat>
+  <ReconnectDelaySeconds>5</ReconnectDelaySeconds>
 </BridgeConfig>
