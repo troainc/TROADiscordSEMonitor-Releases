@@ -79,7 +79,10 @@
     <string>start</string>
   </AllowedTorchCommands>
   <TorchCommandPrefix>!</TorchCommandPrefix>
-  <AllowAnyTorchCommand>true</AllowAnyTorchCommand>
+  <!-- Security default: false means only the commands listed in AllowedTorchCommands -->
+  <!-- can be run from Discord. Set to true only if you intentionally want to forward -->
+  <!-- any Torch/plugin command to trusted administrators. -->
+  <AllowAnyTorchCommand>false</AllowAnyTorchCommand>
   <EnableAdvertisements>true</EnableAdvertisements>
   <AdvertisementIntervalSeconds>1800</AdvertisementIntervalSeconds>
   <AdvertisementChannelId></AdvertisementChannelId>
