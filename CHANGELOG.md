@@ -10,6 +10,7 @@
 - Adds `!gridstatus` (list tracked non-compliant player grids) and `!gridlog <on|off|status>` (control Discord audit output while in-game warnings continue).
 - Players can run `!gridcheck` and `!gridcheck help` in Space Engineers chat to inspect only their own major-owned grids.
 - Requirements per grid remain a placed beacon, at least 25 blocks (configurable), and a `FACTIONTAG-GridName` name. NPC-created grids are excluded. The plugin only warns and audits; it never deletes grids.
+- Security: new configurations now default `AllowAnyTorchCommand` to `false` (allowlist-only). Only the commands listed in `AllowedTorchCommands` can be forwarded from Discord unless an owner explicitly opts back in. Existing configurations keep their current value.
 
 ## v1.1.1 — Monitor+ Identity and Save Notification Control
 
