@@ -1,5 +1,16 @@
 # Monitor+ Changelog
 
+## v1.1.2K — Grid Compliance Now Actually Ships
+
+**Released:** September 4, 2026
+
+- Grid-compliance monitoring is now compiled into the shipped Monitor+ build. Earlier packages documented `!gridcheck`, `!gridstatus`, `!gridlog`, and new-grid warnings, but the code was not included in the binary — those features did nothing until this release.
+- Adds `EnableGridComplianceWarnings` as an on/off switch for the whole World Protection and Privacy feature. Set it to `false` to turn off all new-grid detection, in-game warnings, five-minute reminders, and Discord audit output. Defaults to `true`.
+- The setting is a normal configuration value and is added to existing configuration files automatically on load, so it is visible and editable. A change takes effect on `!reload` without a full session restart.
+- Adds `!gridstatus` (list tracked non-compliant player grids) and `!gridlog <on|off|status>` (control Discord audit output while in-game warnings continue).
+- Players can run `!gridcheck` and `!gridcheck help` in Space Engineers chat to inspect only their own major-owned grids.
+- Requirements per grid remain a placed beacon, at least 25 blocks (configurable), and a `FACTIONTAG-GridName` name. NPC-created grids are excluded. The plugin only warns and audits; it never deletes grids.
+
 ## v1.1.1 — Monitor+ Identity and Save Notification Control
 
 **Released:** September 1, 2026
