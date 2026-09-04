@@ -1,5 +1,19 @@
 # Monitor+ Changelog
 
+## v1.1.3K — Full Command Parity: Slash Commands and Complete Command Set
+
+**Released:** September 4, 2026
+
+Every command the documentation advertises now works on the Monitor+ build as both a text (`!`) command and a Discord **slash** command, with Monitor+ branded embed replies and webhook fallback.
+
+- Restores Discord **slash commands**. Previously `/servercard` (and any `/` command) returned "The application did not respond" because the build only handled text commands — it never registered slash commands or answered interactions. The bot now registers its commands on connect (overwriting any stale registration), acknowledges interactions within Discord's 3-second window, and edits the reply in with the result.
+- All command replies render as **Monitor+ branded embeds** (title, timestamp footer, colour by severity), whether invoked by slash command or text.
+- Adds the public commands `server` / `online` (server summary), `rules`, `discord`, and `support` — no administrator authorization required.
+- Adds player account linking: `link <Steam-ID-64>` and `link confirm <code>` link Discord to Steam via a one-time in-game code, so linked players can use `reward` without an administrator mapping.
+- Adds the backups suite: `backups`, `backupnow`, `backupschedule`, `backupinfo <name>`, and `restorerequest <name>` (audited request only — never changes files).
+- Adds `playerlookup <name-or-steam-id>`, `timezone <choice|list|status>` (with a slash-command time-zone picker), and `topvoters` (vote leaderboard).
+- New configuration values: `PlayerRulesMessage`, `PlayerDiscordUrl`, `EnablePlayerSelfLinking`, `PlayerLinkCodeMinutes`, `PlayerDiscordSteamMappings`, `BackupDirectory`, `BackupListCount`, `EnableVoteLeaderboard`, `VoteLeaderboardCount`.
+
 ## v1.1.2K — Grid Compliance Now Actually Ships
 
 **Released:** September 4, 2026
