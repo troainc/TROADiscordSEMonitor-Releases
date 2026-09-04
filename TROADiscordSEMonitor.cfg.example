@@ -131,6 +131,18 @@
   <!-- on !reload; the !gridcheck player command is unaffected. -->
   <EnableGridComplianceWarnings>true</EnableGridComplianceWarnings>
   <GridComplianceLogChannelId></GridComplianceLogChannelId>
+  <!-- Player commands: rules / discord responses and player self-linking (!link). -->
+  <PlayerRulesMessage>Follow server rules, respect other players, and keep grids compliant before cleanup.</PlayerRulesMessage>
+  <PlayerDiscordUrl></PlayerDiscordUrl>
+  <EnablePlayerSelfLinking>true</EnablePlayerSelfLinking>
+  <PlayerLinkCodeMinutes>10</PlayerLinkCodeMinutes>
+  <PlayerDiscordSteamMappings />
+  <!-- Backups: blank BackupDirectory auto-detects the Backups folder beside the world's Saves. -->
+  <BackupDirectory></BackupDirectory>
+  <BackupListCount>10</BackupListCount>
+  <!-- Vote leaderboard (!topvoters). -->
+  <EnableVoteLeaderboard>true</EnableVoteLeaderboard>
+  <VoteLeaderboardCount>10</VoteLeaderboardCount>
   <ConnectWebsiteUrl>https://therealmsofasgard.com</ConnectWebsiteUrl>
   <ConnectSupportUrl>https://tickets.therealmsofasgard.com</ConnectSupportUrl>
   <ConnectSupportEmail>help@therealmsofasgard.com</ConnectSupportEmail>
