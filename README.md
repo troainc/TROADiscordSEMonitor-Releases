@@ -42,6 +42,7 @@ Discord save messages use native Discord timestamps:
 
 ### World Protection and Privacy
 
+- **Optional feature, off with one setting.** The entire grid-compliance system is controlled by `EnableGridComplianceWarnings`. Leave it `true` to use the features below, or set it to `false` to stop every new-grid warning, reminder, and audit — for owners who do not enforce grid cleanup and do not want the in-game notices. The change applies after `!reload`; the player `!gridcheck` command stays available either way.
 - **Grid-compliance monitoring** checks new player grids for a placed beacon, required placed block count (25 by default), and `FACTIONTAG-GridName` naming.
 - **One teal centered in-game notice** tells the owner what must be corrected before cleanup. It is sent only once per newly tracked non-compliant grid.
 - **Five-minute follow-up checks** keep monitoring non-compliant grids. Still-failing grids receive a teal in-game chat reminder and a staff audit entry every five minutes by default.
@@ -105,6 +106,7 @@ Use a **full Torch restart** after replacing the DLL. `!reload` reloads configur
 | `AdminSteamIds` and `DiscordSteamMappings` | Recommended | Links staff Discord identities to Steam identities. |
 | `StatusDashboardChannelId` | Recommended | Channel used for the live server card. |
 | `AdminLogChannelId` | Recommended | Channel used for audits and administrative events. |
+| `EnableGridComplianceWarnings` | Optional | Master on/off switch for World Protection and Privacy (grid-compliance) monitoring. `true` (default) sends new-grid warnings, reminders, and audits; set to `false` to turn the whole feature off. Takes effect on `!reload`. |
 | `GridComplianceLogChannelId` | Optional | Channel for grid-compliance audit records. |
 | `HealthAlertChannelId` | Optional | Channel for health warnings. |
 | `BackupDirectory` | Optional | Leave blank to automatically use `Saves\\Backups`. |
@@ -177,4 +179,3 @@ These commands are typed in **Space Engineers game chat**. They are available to
 ## Public Release Contents
 
 This public repository contains release packages and documentation only. It does not contain private source code, live configuration files, bot tokens, voting API keys, webhooks, or other credentials.
-
