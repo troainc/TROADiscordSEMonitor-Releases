@@ -121,6 +121,13 @@
   <StatusDashboardChannelId></StatusDashboardChannelId>
   <StatusDashboardIntervalMinutes>30</StatusDashboardIntervalMinutes>
   <StatusDashboardAcceptCommands>false</StatusDashboardAcceptCommands>
+  <!-- World Protection and Privacy (grid compliance). -->
+  <!-- Set to false to turn off ALL new-grid compliance monitoring: the in-game -->
+  <!-- "add a beacon / 25 blocks / FACTIONTAG-GridName" warnings, the five-minute -->
+  <!-- reminders, and the Discord audit entries. Default true. Change takes effect -->
+  <!-- on !reload; the !gridcheck player command is unaffected. -->
+  <EnableGridComplianceWarnings>true</EnableGridComplianceWarnings>
+  <GridComplianceLogChannelId></GridComplianceLogChannelId>
   <ConnectWebsiteUrl>https://therealmsofasgard.com</ConnectWebsiteUrl>
   <ConnectSupportUrl>https://tickets.therealmsofasgard.com</ConnectSupportUrl>
   <ConnectSupportEmail>help@therealmsofasgard.com</ConnectSupportEmail>
