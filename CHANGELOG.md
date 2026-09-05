@@ -1,5 +1,15 @@
 # Monitor+ Changelog
 
+## v1.1.3.1K — Command Model Rework: Grouped Slash Commands, In-Game Commands, Slimmer Config, Prettier Replies
+
+Refines how commands are invoked and presented, and trims the configuration.
+
+- **Grouped Discord slash commands.** Commands are now organised under two top-level slash commands: `/monitorplus <command>` for player commands and `/adminmonitorplus <command>` for administrator commands. `/adminmonitorplus` is hidden from non-administrators in Discord.
+- **In-game player commands.** Player commands now work in Space Engineers game chat via `!`: `!server`, `!online`, `!rules`, `!discord`, `!support`, `!votelink`, `!topvoters` (alongside `!gridcheck`). Admin commands stay Discord-only.
+- **Text fallback preserved.** The original `!command` form still works in the Discord command channel.
+- **Audience-branded, prettier replies.** Replies are branded **Monitor+** for player commands and **Admin Monitor+** for admin commands, with a native Discord timestamp and a server-name footer. The server summary is a richer multi-line card (status, players, labelled simulation-speed rating).
+- **Slimmer configuration.** The generated config drops from ~138 to ~62 settings — only channels, credentials, IDs, feature toggles, and the values owners actually tune remain. Cosmetic and rarely-changed settings became fixed sensible defaults. Existing configs still load; removed settings are ignored and use their defaults.
+
 ## v1.1.3K — Full Command Parity: Slash Commands and Complete Command Set
 
 **Released:** September 4, 2026
