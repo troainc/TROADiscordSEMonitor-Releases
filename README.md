@@ -6,6 +6,50 @@
 
 Built for **.NET Framework 4.8** and **C# 5-compatible** Torch environments.
 
+## How to Use Monitor+
+
+A start-to-finish walkthrough for setting up and running Monitor+.
+
+### 1. Create the Discord bot
+
+1. Go to the [Discord Developer Portal](https://discord.com/developers/applications) → **New Application** → name it (e.g. "Monitor+").
+2. Open **Bot** → **Reset Token** and copy the token. This is your `BotToken` — keep it secret.
+3. Under **Bot**, enable the **Server Members Intent** and **Message Content Intent**.
+4. Open **OAuth2 → URL Generator**, tick the **`bot`** and **`applications.commands`** scopes, then grant at least: View Channels, Send Messages, Embed Links, and Read Message History. Open the generated URL and invite the bot to your server.
+
+### 2. Install the plugin
+
+1. Stop Torch.
+2. Extract the release ZIP into Torch's plugin directory (keep `TROADiscordSEMonitor.dll` and `manifest.xml` together).
+3. Start Torch once to generate `TROADiscordSEMonitor.cfg` in plugin storage, then stop Torch again.
+
+### 3. Configure it
+
+Edit `TROADiscordSEMonitor.cfg` (see **Essential Configuration** below). At minimum set `BotToken`, `ChatChannelId` (public chat bridge), `CommandChannelId` (private admin channel), and your admin identities (`AdminDiscordUserIds` + `DiscordSteamMappings` + `AdminSteamIds`).
+
+To get a channel or user ID, enable **Developer Mode** in Discord (User Settings → Advanced), then right-click a channel or user → **Copy ID**. Start Torch and run `/adminmonitorplus bridge-id` in your command channel to confirm the bot sees it.
+
+### 4. Use the commands
+
+See **How Commands Work** below for the three ways to run commands. Quick examples:
+
+- Players: `/monitorplus server`, `/monitorplus rules`, `/monitorplus reward` — or in-game `!server`, `!gridcheck`.
+- Admins: `/adminmonitorplus status`, `/adminmonitorplus backupnow`, `/adminmonitorplus restartin minutes:10 reason:patch`.
+
+### 5. Common tasks
+
+| I want to… | Do this |
+| --- | --- |
+| See server status | `/monitorplus server` (players) or `/adminmonitorplus status` (detailed) |
+| Take a backup now | `/adminmonitorplus backupnow` |
+| Schedule backups | `/adminmonitorplus backupschedule every 60` |
+| Silence grid warnings | Set `EnableGridComplianceWarnings=false`, then `!reload` |
+| Let players link their account | They run `/monitorplus link <steam-id>`, then `/monitorplus link-confirm <code>` (code shown in-game) |
+| Change the timezone on embeds | `/adminmonitorplus timezone` and pick a zone |
+| Reload config without a restart | `/adminmonitorplus reload` (reloads config + reconnects; does not load new plugin code) |
+
+> After editing the config, run `/adminmonitorplus reload` (or `!reload`). Replacing the plugin DLL still needs a full Torch restart.
+
 ## How Commands Work
 
 Commands run three ways, and replies come back as branded embeds (**Monitor+** for players, **Admin Monitor+** for admins):
