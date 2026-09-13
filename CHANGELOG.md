@@ -1,5 +1,15 @@
 # Monitor+ Changelog
 
+## v1.1.4K — Economy Connector and Discord Chat Colour Fix
+
+**Released:** September 13, 2026
+
+- **Economy connector (new, optional).** Players can check their in-game credit balance from Discord with `/monitorplus balance` and in-game with `!balance`. Monitor+ reads the server's built-in Space Engineers economy through reflection, so it takes no hard dependency on the economy and still loads on servers that do not run one. If no economy is active, the command says so instead of failing.
+  - Off by default. Set `EnableEconomyConnector=true` to enable it. In Discord, `balance` resolves the caller through `DiscordSteamMappings`; in-game, `!balance` uses the calling player's own Steam account.
+- **Discord chat colour fix.** The Discord username shown in-game was stuck in the default brown with no working way to change it. `DiscordGameTextColor` (message font) and `DiscordGameHighlightColor` (sender-name colour — a name, `#RRGGBB`, `#RRGGBBAA`, or `R,G,B`) are now honored. Defaults: `White` text, `#00B7C3` (teal) name.
+
+> This is the first published release to bundle everything since the August build: the grid-compliance on/off toggle (v1.1.2K), full slash-command parity and the complete command set (v1.1.3K), the grouped slash + in-game command model and slimmer config (v1.1.3.1K), plus the two additions above. All of it ships in the v1.1.4K binary.
+
 ## v1.1.3.1K — Command Model Rework: Grouped Slash Commands, In-Game Commands, Slimmer Config, Prettier Replies
 
 Refines how commands are invoked and presented, and trims the configuration.
