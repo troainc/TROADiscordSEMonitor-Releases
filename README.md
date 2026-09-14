@@ -45,6 +45,7 @@ See **How Commands Work** below for the three ways to run commands. Quick exampl
 | Take a backup now | `/adminmonitorplus backupnow` |
 | Schedule backups | `/adminmonitorplus backupschedule every 60` |
 | Silence grid warnings | Set `EnableGridComplianceWarnings=false`, then `!reload` |
+| Stop other plugins' chat reaching Discord | Leave `RelayOnlyPlayerChat=true` (default) — only real player chat is bridged |
 | Let players link their account | They run `/monitorplus link <steam-id>`, then `/monitorplus link-confirm <code>` (code shown in-game) |
 | Change the timezone on embeds | `/adminmonitorplus timezone` and pick a zone |
 | Reload config without a restart | `/adminmonitorplus reload` (reloads config + reconnects; does not load new plugin code) |
@@ -61,7 +62,7 @@ Commands run three ways, and replies come back as branded embeds (**Monitor+** f
 - **In-game (`!`)** — player commands work in Space Engineers game chat: `!server`, `!online`, `!rules`, `!discord`, `!support`, `!votelink`, `!topvoters`, `!balance`, `!gridcheck`.
 - **Discord text fallback** — the classic `!command` form still works in the command channel.
 
-> Monitor+ stays in its own lane. Even if `AllowAnyTorchCommand=true`, commands that are not in `AllowedTorchCommands` (typically other plugins' commands) are forwarded quietly and logged to the server log — Monitor+ does not post chatter for them or re-badge their output in Discord.
+> Monitor+ stays in its own lane. Even if `AllowAnyTorchCommand=true`, commands that are not in `AllowedTorchCommands` (typically other plugins' commands) are forwarded quietly and logged to the server log — Monitor+ does not post chatter for them or re-badge their output in Discord. Likewise the chat bridge only relays real player chat, not other plugins' system messages (see `RelayOnlyPlayerChat`).
 
 ## Monitor+ In-Game Identity and Save Messages
 
@@ -80,7 +81,7 @@ Player-facing system announcements use **Monitor+** by default. Server owners ca
 
 ### Discord and Player Experience
 
-- **Two-way global chat bridge** between Space Engineers and Discord.
+- **Two-way global chat bridge** between Space Engineers and Discord. Only real player chat is bridged; other plugins' system messages are filtered out (`RelayOnlyPlayerChat`, default on).
 - **Discord bot presence** updates with player count, simulation speed, and optional player names.
 - **Player join/leave messages** can be separated into public player-status and staff audit channels.
 - **Grouped Discord slash commands** — `/monitorplus <command>` for players and `/adminmonitorplus <command>` for admins (hidden from non-admins). Player commands also work in-game with `!`; the classic `!command` form still works in the command channel.
@@ -147,6 +148,8 @@ Use a **full Torch restart** after replacing the DLL. `!reload` reloads configur
 | `AdminSteamIds` and `DiscordSteamMappings` | Recommended | Links staff Discord identities to Steam identities. |
 | `StatusDashboardChannelId` | Recommended | Channel used for the live server card. |
 | `AdminLogChannelId` | Recommended | Channel used for audits and administrative events. |
+| `RelayOnlyPlayerChat` | Optional | `true` (default) bridges only real player chat to Discord; plugin/system chat (Cleaner+, TROA Profiler+, server broadcasts) is skipped. Set `false` to relay all global chat. |
+| `ChatBridgeIgnoredSenders` | Optional | Extra list of in-game sender names never bridged to Discord (backstop for a plugin that chats under a real Steam ID). Defaults: `Cleaner+`, `TROA Profiler+`, `Monitor+`, `Server`. |
 | `EnableGridComplianceWarnings` | Optional | Master on/off switch for World Protection and Privacy (grid-compliance) monitoring. `true` (default) sends new-grid warnings, reminders, and audits; set to `false` to turn the whole feature off. Takes effect on `!reload`. |
 | `GridComplianceLogChannelId` | Optional | Channel for grid-compliance audit records. |
 | `EnableEconomyConnector` | Optional | `false` (default) hides the balance command. Set `true` to let players check their in-game credit balance with `/monitorplus balance` and `!balance` (reads the built-in Space Engineers economy through reflection; degrades gracefully if none is active). |
@@ -194,7 +197,7 @@ Run these as `/adminmonitorplus <command>` (recommended) or with the `!` fallbac
 | `restartin <minutes> [reason]` | Schedules a save-first restart. |
 | `cancelrestart` | Cancels the pending manual restart. |
 | `addadmin <discord-id>` | Adds a Discord administrator. |
-| `removeadmin <discord-id>` | Removes a Discord administrator. |
+| `removeadmin <discord-id>` | Removes an administrator. |
 | `addport <port>` | Sets the Space Engineers game port for the server card. |
 | `timezone <choice\|list\|status>` | Shows or changes the server time zone used in embeds. |
 | `reload` | Reloads configuration and reconnects Discord. |
@@ -204,7 +207,7 @@ Run these as `/adminmonitorplus <command>` (recommended) or with the `!` fallbac
 
 - The monitor **does not delete grids**. It communicates requirements and records compliance status for staff.
 - The monitor **does not automatically restore backups**. A restore needs normal host/server-owner action with Torch stopped.
-- **Stays in its own lane.** Monitor+ only posts Discord confirmations for its own curated server commands (`AllowedTorchCommands`). Other plugins' commands are forwarded quietly and logged to the server log, never re-branded as Monitor+.
+- **Stays in its own lane.** Monitor+ only posts Discord confirmations for its own curated server commands (`AllowedTorchCommands`); other plugins' commands are forwarded quietly and logged to the server log, never re-branded as Monitor+. The chat bridge relays only real player chat, not other plugins' system messages.
 - Keep `AllowedTorchCommands` small and only grant administrator mappings to trusted staff.
 - Full backups remain on the server. Download them through AMP or your host's file manager.
 
