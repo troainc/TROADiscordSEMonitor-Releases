@@ -158,6 +158,21 @@ Use a **full Torch restart** after replacing the DLL. `!reload` reloads configur
 
 The generated config lists only the settings owners tune (about 60). Everything else uses sensible built-in defaults. Never publish a live `.cfg` file — it may contain a bot token and voting API credentials.
 
+## Discord Channels
+
+Monitor+ routes each kind of message to a configurable channel. Set the IDs in `TROADiscordSEMonitor.cfg` (enable Developer Mode in Discord, then right-click a channel -> Copy ID). Optional channels fall back to the chat channel when left blank.
+
+| Setting | Purpose |
+| --- | --- |
+| `ChatChannelId` | Two-way public chat bridge between Discord and in-game global chat. |
+| `CommandChannelId` | Private channel where administrators run bot/Torch commands. |
+| `StatusDashboardChannelId` | The single live server dashboard card (`/adminmonitorplus servercard`). |
+| `AdminLogChannelId` | Administrative audit events and staff join/leave logging. |
+| `PlayerStatusChannelId` | Public player join/leave announcements. |
+| `GridComplianceLogChannelId` | Grid-compliance audit records (initial notice + reminders). |
+
+Keep the command channel private to staff -- Discord acts as an authenticated pass-through to Torch.
+
 ## Player Commands ( `/monitorplus <command>` )
 
 | Command | What it does |
@@ -210,6 +225,22 @@ Run these as `/adminmonitorplus <command>` (recommended) or with the `!` fallbac
 - **Stays in its own lane.** Monitor+ only posts Discord confirmations for its own curated server commands (`AllowedTorchCommands`); other plugins' commands are forwarded quietly and logged to the server log, never re-branded as Monitor+. The chat bridge relays only real player chat, not other plugins' system messages.
 - Keep `AllowedTorchCommands` small and only grant administrator mappings to trusted staff.
 - Full backups remain on the server. Download them through AMP or your host's file manager.
+
+## Roadmap
+
+Planned and in-progress work. Scope and timing may change.
+
+### Next -- v1.1.4K.3
+
+- **Online player list** -- `!players` (Discord command channel + in-game, alias in-game `!who`) lists everyone currently connected with **name, Steam ID, and live ping**. Admin-gated; long lists cap at 30 with an "N more" tail. Per-player ping is best-effort with an `n/a` + aggregate fallback when a host cannot key ping per player.
+
+### Under consideration
+
+- `/players` slash parity under the `/adminmonitorplus` group.
+- Optional public, names-only variant of the player list for players.
+- Confirm per-player ping keying across AMP / Wine hosts.
+
+Have a request? Open an issue or raise it in the staff channel.
 
 ## Public Release Contents
 
