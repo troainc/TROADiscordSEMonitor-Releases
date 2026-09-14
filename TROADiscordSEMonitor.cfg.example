@@ -13,6 +13,16 @@
   <BotToGame>false</BotToGame>
   <CommandPrefix>!</CommandPrefix>
   <TorchCommandPrefix>!</TorchCommandPrefix>
+  <!-- Chat bridge lane control. RelayOnlyPlayerChat=true bridges ONLY real player chat to Discord;
+       plugin/system chat (Cleaner+, TROA Profiler+, server broadcasts - no Steam identity) is skipped.
+       Set false to relay everything. ChatBridgeIgnoredSenders is an extra name blocklist. -->
+  <RelayOnlyPlayerChat>true</RelayOnlyPlayerChat>
+  <ChatBridgeIgnoredSenders>
+    <string>Cleaner+</string>
+    <string>TROA Profiler+</string>
+    <string>Monitor+</string>
+    <string>Server</string>
+  </ChatBridgeIgnoredSenders>
 
   <!-- ============ Channels (Discord channel IDs) ============ -->
   <ChatChannelId>PASTE_DISCORD_CHANNEL_ID_HERE</ChatChannelId>
