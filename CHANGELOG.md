@@ -1,5 +1,14 @@
 # Monitor+ Changelog
 
+## v1.1.4K.2 — Chat Bridge Stays in Its Own Lane
+
+**Released:** September 14, 2026
+
+- **Only real player chat is bridged to Discord now.** The in-game→Discord chat bridge previously relayed *all* global chat, including other plugins' system messages (e.g. Cleaner+ digests, TROA Profiler+ notices), which appeared in the Discord chat channel as if Monitor+ had sent them.
+- The bridge now skips messages that carry no Steam identity (`AuthorSteamId == 0` — plugin/system senders, server broadcasts, and Monitor+'s own in-game advertisements), controlled by the new `RelayOnlyPlayerChat` setting (default `true`).
+- Added `ChatBridgeIgnoredSenders` — an explicit list of in-game sender names never relayed to Discord, as a backstop for any plugin that chats under a real Steam ID. Defaults: `Cleaner+`, `TROA Profiler+`, `Monitor+`, `Server`.
+- Set `RelayOnlyPlayerChat=false` to restore the old relay-everything behavior. Real player chat is unaffected.
+
 ## v1.1.4K.1 — Economy Connector, Discord Chat Colour Fix, Own-Lane Command Forwarding
 
 **Released:** September 14, 2026
@@ -9,7 +18,7 @@
 - **Discord chat colour fix.** The Discord username shown in-game was stuck in the default brown with no working way to change it. `DiscordGameTextColor` (message font) and `DiscordGameHighlightColor` (sender-name colour — a name, `#RRGGBB`, `#RRGGBBAA`, or `R,G,B`) are now honored. Defaults: `White` text, `#00B7C3` (teal) name.
 - **Monitor+ stays in its own lane when forwarding commands.** When `AllowAnyTorchCommand=true`, Monitor+ previously grabbed *any* `!command` typed in the command channel — including commands owned by other plugins — and posted "Processing/accepted" chatter, an audit entry, and even re-badged the other plugin's own reply as a **Monitor+** embed. Now Monitor+ only posts Discord confirmations for its **own curated server commands** (the entries in `AllowedTorchCommands`, such as `save`/`restart`/`stop`/`start`). Any other forwarded command is passed to Torch quietly — no Discord chatter and no re-badging — and the activity is recorded in the **server log** instead. Commands in `AllowedTorchCommands` are unchanged.
 
-> This is the first published release to bundle everything since the August build: the grid-compliance on/off toggle (v1.1.2K), full slash-command parity and the complete command set (v1.1.3K), the grouped slash + in-game command model and slimmer config (v1.1.3.1K), plus the three additions above. All of it ships in the v1.1.4K.1 binary.
+> These are the first published releases to bundle everything since the August build: the grid-compliance on/off toggle (v1.1.2K), full slash-command parity and the complete command set (v1.1.3K), the grouped slash + in-game command model and slimmer config (v1.1.3.1K), plus the additions above. All of it ships in the v1.1.4K.2 binary.
 
 ## v1.1.3.1K — Command Model Rework: Grouped Slash Commands, In-Game Commands, Slimmer Config, Prettier Replies
 
