@@ -54,7 +54,10 @@
     <string>start</string>
   </AllowedTorchCommands>
   <!-- Security default: false = only AllowedTorchCommands can be forwarded from Discord.
-       Set true only to intentionally allow any Torch/plugin command for trusted admins. -->
+       Set true only to intentionally allow any Torch/plugin command for trusted admins.
+       Note: even when true, commands that are NOT in AllowedTorchCommands (typically other
+       plugins' commands) are forwarded quietly and logged to the server log only - Monitor+
+       does not post chatter for them or re-badge their output in Discord. -->
   <AllowAnyTorchCommand>false</AllowAnyTorchCommand>
 
   <!-- ============ Feature toggles ============ -->
@@ -109,6 +112,12 @@
   <SpaceEngineersVotePageUrl>https://space-engineers.com/server/244351/</SpaceEngineersVotePageUrl>
   <SpaceEngineersVoteApiKey></SpaceEngineersVoteApiKey>
   <VoteRewardTorchCommand></VoteRewardTorchCommand>
+
+  <!-- ============ Economy connector (optional) ============ -->
+  <!-- true lets players check their credit balance via /monitorplus balance (Discord)
+       and !balance (in-game). Reads the server's built-in Space Engineers economy through
+       reflection, so it stays off by default and fails gracefully if no economy is active. -->
+  <EnableEconomyConnector>false</EnableEconomyConnector>
 
   <!-- ============ Support / links ============ -->
   <ConnectWebsiteUrl>https://therealmsofasgard.com</ConnectWebsiteUrl>
