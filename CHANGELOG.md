@@ -67,6 +67,14 @@ Every command the documentation advertises now works on the Monitor+ build as bo
 - Adds `SaveNotificationCooldownSeconds` with a 300-second default to suppress duplicate automatic-save messages caused by multiple world files updating during one save.
 - Administrator-requested save confirmations bypass the duplicate-suppression window.
 
+## v1.1.5K — Restart Control Removed
+
+- Removed Monitor+'s restart scheduler, timed restart and cancellation commands, countdown announcements, save-delay workflow, and Torch restart execution.
+- Removed passive Essentials restart-schedule parsing and dashboard schedule output. Dashboards now report the server process start time instead.
+- Removed restart-scheduler settings from newly generated and example configurations. Existing configurations remain compatible because obsolete XML elements are ignored during load.
+- Manual Torch command forwarding remains available: administrators may still allow `restart` through `AllowedTorchCommands`, alongside the existing `save`, `stop`, and `start` entries.
+- Restart management now belongs to the dedicated restart plugin; Monitor+ keeps ordinary monitoring, saves, backups, Discord reconnects, reloads, uptime reporting, and command forwarding.
+
 ## v1.1.0J — Discord Access and In-Game Chat Styling
 
 - Removes the administrator Discord-to-Steam mapping requirement for forwarded Torch commands.
@@ -83,7 +91,7 @@ Every command the documentation advertises now works on the Monitor+ build as bo
 ### Added
 
 - Native Discord slash-command menu for player and administrator tools.
-- Public `/servercard` with live players, world grid count, simulation speed, CPU, memory, storage, restart information, voting, support links, and versions.
+- Public `/servercard` with live players, world grid count, simulation speed, CPU, memory, storage, process uptime, voting, support links, and versions.
 - Branded Discord embeds with a single server-local date and time in the `TROA Monitor` footer.
 - Major timezone choices, including Indianapolis/Eastern for new configurations.
 - Player Discord-to-Steam linking with in-game confirmation codes.
@@ -102,8 +110,6 @@ Every command the documentation advertises now works on the Monitor+ build as bo
 - `/servercard` is the preferred public dashboard command.
 - `!status` returns the detailed server card to administrators while players receive a concise public summary.
 - Only global game chat is bridged to Discord. Faction, direct/private, `/f`, and `./f` chat remain private and are recorded in the server log only.
-- New configuration files default `EnableRestartScheduler` to `false`.
-- Existing configuration values are preserved. The plugin does not overwrite an explicitly configured restart-scheduler setting.
 - Generated configuration is compacted to essential connection, channel, ownership, support, voting, and backup values.
 
 ### Fixed
@@ -123,12 +129,9 @@ Every command the documentation advertises now works on the Monitor+ build as bo
 6. Start Torch and test `/servercard`, `!status`, and `!troasediscordhelp`.
 7. Configure automatic backups only if wanted: `!backupschedule status`, `!backupschedule startup on`, or `!backupschedule every <minutes>`.
 
-> `EnableRestartScheduler=false` already prevents the automatic restart timer from starting. This release fixes incorrect Discord status messages; it does not cause a disabled restart scheduler to restart the server.
-
 ## v1.0.2 — Discord Reconnect Status Hotfix
 
 - Corrected misleading startup-status notifications following a Discord reconnect.
-- Set the default restart scheduler value to disabled for newly generated configurations.
 
 ## v1.0.0 — Initial Public Release
 

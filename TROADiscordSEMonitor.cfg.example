@@ -80,8 +80,6 @@
   <DiscordPresenceShowPlayerNames>true</DiscordPresenceShowPlayerNames>
   <EnableStatusDashboard>false</EnableStatusDashboard>
   <StatusDashboardAcceptCommands>false</StatusDashboardAcceptCommands>
-  <EnableEssentialsRestartTracking>true</EnableEssentialsRestartTracking>
-  <EnableRestartScheduler>true</EnableRestartScheduler>
   <UseAdminCommandAudit>true</UseAdminCommandAudit>
   <StatusTimeZoneId>Eastern Standard Time</StatusTimeZoneId>
 
@@ -133,8 +131,5 @@
   <ConnectWebsiteUrl>https://therealmsofasgard.com</ConnectWebsiteUrl>
   <ConnectSupportUrl>https://tickets.therealmsofasgard.com</ConnectSupportUrl>
   <ConnectSupportEmail>help@therealmsofasgard.com</ConnectSupportEmail>
-
-  <!-- ============ Essentials (optional) ============ -->
-  <EssentialsConfigPath></EssentialsConfigPath>
 
 </BridgeConfig>

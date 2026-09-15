@@ -34,7 +34,7 @@ To get a channel or user ID, enable **Developer Mode** in Discord (User Settings
 See **How Commands Work** below for the three ways to run commands. Quick examples:
 
 - Players: `/monitorplus server`, `/monitorplus rules`, `/monitorplus balance` — or in-game `!server`, `!balance`, `!gridcheck`.
-- Admins: `/adminmonitorplus status`, `/adminmonitorplus backupnow`, `/adminmonitorplus restartin minutes:10 reason:patch`.
+- Admins: `/adminmonitorplus status`, `/adminmonitorplus backupnow`, `/adminmonitorplus servercard`.
 
 ### 5. Common tasks
 
@@ -71,10 +71,10 @@ Player-facing system announcements use **Monitor+** by default. Server owners ca
 ## Why Server Owners Use It
 
 - Keep players informed with live server cards, slash commands, voting, links, and support tools.
-- See the health of the server at a glance: population, simulation speed, grid count, saves, storage, network, versions, and restart information.
+- See the health of the server at a glance: population, simulation speed, grid count, saves, storage, network, versions, and process uptime.
 - Protect player privacy: only global game chat is bridged; faction and direct chat stays on the server.
 - Keep grids clean with clear, in-game compliance reminders and staff audit visibility.
-- Make safer operations practical: save-first restarts, announcements, dated backups, and manual restore requests.
+- Make safer operations practical: save requests, announcements, dated backups, and manual restore requests.
 - Keep the configuration lean. It contains the channels and essential server details—not an ever-growing list of operational settings (about 60 settings, down from ~140).
 
 ## Complete Feature Set
@@ -86,7 +86,7 @@ Player-facing system announcements use **Monitor+** by default. Server owners ca
 - **Player join/leave messages** can be separated into public player-status and staff audit channels.
 - **Grouped Discord slash commands** — `/monitorplus <command>` for players and `/adminmonitorplus <command>` for admins (hidden from non-admins). Player commands also work in-game with `!`; the classic `!command` form still works in the command channel.
 - **Audience-branded embeds** — replies brand as **Monitor+** (players) or **Admin Monitor+** (admins), with a native Discord timestamp and a server-name footer.
-- **Public server dashboard** via `/adminmonitorplus servercard`, showing live players, world grids, simulation speed, CPU/memory, storage, server address, restart state, voting, support links, and version information.
+- **Public server dashboard** via `/adminmonitorplus servercard`, showing live players, world grids, simulation speed, CPU/memory, storage, server address, process uptime, voting, support links, and version information.
 - **Quick player commands:** `server`, `online`, `rules`, `discord`, `support` (in Discord and in-game).
 - **Economy balance (optional):** players can check their in-game credit balance with `/monitorplus balance` and `!balance`. Reads the server's built-in Space Engineers economy through reflection; off by default (`EnableEconomyConnector`), and reports gracefully when no economy is active.
 - **Player linking** lets players associate Discord with their Steam account using a short in-game confirmation code.
@@ -111,10 +111,8 @@ Player-facing system announcements use **Monitor+** by default. Server owners ca
 - **Player lookup** helps staff identify online player names and IDs.
 - **In-game announcements** can be sent from Discord and recorded in the command audit.
 - **World save control** gives authorized staff a safe save request without direct server access.
-- **Save-first restart controls** allow a timed restart with a reason, cancellation, and audit history.
-- **Controlled Torch forwarding** lets owners expose only explicitly allowed Torch commands to trusted Discord administrators. Commands outside the allow-list (typically other plugins') are forwarded quietly and logged to the server log, so Monitor+ never re-brands another plugin's output as its own.
+- **Controlled Torch forwarding** lets owners expose only explicitly allowed Torch commands, including `restart` when listed in `AllowedTorchCommands`, to trusted Discord administrators. Commands outside the allow-list (typically other plugins') are forwarded quietly and logged to the server log, so Monitor+ never re-brands another plugin's output as its own.
 - **Channel and administrator setup tools** make it easy to collect IDs, set the server port, and maintain authorized staff mappings.
-- **Essentials restart tracking** shows a detected Essentials schedule on the dashboard without taking control of it.
 - **Optional webhook** provides alternate delivery when a channel post fails.
 - **Optional rotating advertisements** can be sent to Discord, in-game, or both.
 
@@ -209,8 +207,6 @@ Run these as `/adminmonitorplus <command>` (recommended) or with the `!` fallbac
 | `restorerequest <name>` | Records a restore request without changing files. |
 | `announce <message>` | Sends an in-game and Discord announcement. |
 | `save` | Requests a world save. |
-| `restartin <minutes> [reason]` | Schedules a save-first restart. |
-| `cancelrestart` | Cancels the pending manual restart. |
 | `addadmin <discord-id>` | Adds a Discord administrator. |
 | `removeadmin <discord-id>` | Removes an administrator. |
 | `addport <port>` | Sets the Space Engineers game port for the server card. |
