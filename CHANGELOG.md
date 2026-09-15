@@ -1,5 +1,13 @@
 # Monitor+ Changelog
 
+## v1.1.5K — Restart Control Removed
+
+- Removed Monitor+'s restart scheduler, timed restart and cancellation commands, countdown announcements, save-delay workflow, and Torch restart execution.
+- Removed passive Essentials restart-schedule parsing and dashboard schedule output. Dashboards now report the server process start time instead.
+- Removed restart-scheduler settings from newly generated and example configurations. Existing configurations remain compatible because obsolete XML elements are ignored during load.
+- Manual Torch command forwarding remains available: administrators may still allow `restart` through `AllowedTorchCommands`, alongside the existing `save`, `stop`, and `start` entries.
+- Restart management now belongs to the dedicated restart plugin; Monitor+ keeps ordinary monitoring, saves, backups, Discord reconnects, reloads, uptime reporting, and command forwarding.
+
 ## v1.1.4K.2 — Chat Bridge Stays in Its Own Lane
 
 **Released:** September 14, 2026
@@ -66,14 +74,6 @@ Every command the documentation advertises now works on the Monitor+ build as bo
 - Adds `{ts_relative}` for Discord's localized relative time, such as “a few minutes ago.”
 - Adds `SaveNotificationCooldownSeconds` with a 300-second default to suppress duplicate automatic-save messages caused by multiple world files updating during one save.
 - Administrator-requested save confirmations bypass the duplicate-suppression window.
-
-## v1.1.5K — Restart Control Removed
-
-- Removed Monitor+'s restart scheduler, timed restart and cancellation commands, countdown announcements, save-delay workflow, and Torch restart execution.
-- Removed passive Essentials restart-schedule parsing and dashboard schedule output. Dashboards now report the server process start time instead.
-- Removed restart-scheduler settings from newly generated and example configurations. Existing configurations remain compatible because obsolete XML elements are ignored during load.
-- Manual Torch command forwarding remains available: administrators may still allow `restart` through `AllowedTorchCommands`, alongside the existing `save`, `stop`, and `start` entries.
-- Restart management now belongs to the dedicated restart plugin; Monitor+ keeps ordinary monitoring, saves, backups, Discord reconnects, reloads, uptime reporting, and command forwarding.
 
 ## v1.1.0J — Discord Access and In-Game Chat Styling
 
