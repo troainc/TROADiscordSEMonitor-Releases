@@ -1,5 +1,11 @@
 # Monitor+ Changelog
 
+## v1.1.5K2 — Discord Vote Redemption and In-Game Claim
+
+- Discord `reward` now reserves a durable pending reward for the verified Steam account instead of executing the reward command remotely.
+- Added native in-game `!claimreward`; the matching Steam account claims the queued reward through the configured `VoteRewardTorchCommand`.
+- A failed or unavailable reward command leaves the pending reward intact so the player can try again later.
+
 ## v1.1.5K — Restart Control Removed
 
 - Removed Monitor+'s restart scheduler, timed restart and cancellation commands, countdown announcements, save-delay workflow, and Torch restart execution.

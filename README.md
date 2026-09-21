@@ -90,7 +90,7 @@ Player-facing system announcements use **Monitor+** by default. Server owners ca
 - **Quick player commands:** `server`, `online`, `rules`, `discord`, `support` (in Discord and in-game).
 - **Economy balance (optional):** players can check their in-game credit balance with `/monitorplus balance` and `!balance`. Reads the server's built-in Space Engineers economy through reflection; off by default (`EnableEconomyConnector`), and reports gracefully when no economy is active.
 - **Player linking** lets players associate Discord with their Steam account using a short in-game confirmation code.
-- **Voting tools:** vote link, reward claim, cooldown-aware tracking, ranking, and top-voter leaderboard.
+- **Voting tools:** vote link, Discord reward reservation, secure in-game reward claim, cooldown-aware tracking, ranking, and top-voter leaderboard.
 - **Timezone support** for major North American, South American, European, African, Middle Eastern, Asian, and Pacific time zones.
 
 ### World Protection and Privacy
@@ -180,13 +180,14 @@ Keep the command channel private to staff -- Discord acts as an authenticated pa
 | `discord` | Shows the configured community Discord link. |
 | `support` | Shows the configured website, support portal, and support email. |
 | `votelink` | Opens the Space Engineers server-list voting page. |
-| `reward` | Checks and claims an eligible vote reward (Discord). |
+| `reward` | Reserves an eligible vote reward for the linked Steam account (Discord). |
+| `claimreward` | Claims a Discord-reserved vote reward from Space Engineers game chat. |
 | `topvoters` | Shows the voting leaderboard. |
 | `balance` | Shows your in-game credit balance (requires `EnableEconomyConnector=true`). |
 | `link <steam-id-64>` / `link-confirm <code>` | Links a Discord account to Steam via a one-time in-game code (Discord). |
 | `help` | Shows the command guide. |
 
-Player commands `server`, `online`, `rules`, `discord`, `support`, `votelink`, `topvoters`, `balance`, and `gridcheck` also work **in-game** with `!`.
+Player commands `server`, `online`, `rules`, `discord`, `support`, `votelink`, `topvoters`, `balance`, and `gridcheck` also work **in-game** with `!`. Discord `reward` reserves a linked SteamID reward; use `!claimreward` in-game to deliver it.
 
 ## Owner and Administrator Commands ( `/adminmonitorplus <command>` )
 
