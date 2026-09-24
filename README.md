@@ -241,4 +241,4 @@ Have a request? Open an issue or raise it in the staff channel.
 
 ## Public Release Contents
 
-This public repository contains release packages and documentation only. It does not contain private source code, live configuration files, bot tokens, voting API keys, webhooks, or other credentials.
+This public repository provides release packages, operator documentation, and credential-free configuration examples.

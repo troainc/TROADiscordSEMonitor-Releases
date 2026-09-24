@@ -1,0 +1,20 @@
+
+# Public-repository privacy boundary: keep local guidance, implementation, and server state out.
+AGENTS.md
+CONTEXT.md
+LOGS.md
+CLAUDE.md
+.codex/
+.claude/
+private/
+internal/
+src/
+*.cs
+*.csproj
+*.sln
+*.props
+*.targets
+bin/
+obj/
+*.log
+*.cfg
