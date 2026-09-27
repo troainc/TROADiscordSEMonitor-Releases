@@ -14,7 +14,7 @@
   <CommandPrefix>!</CommandPrefix>
   <TorchCommandPrefix>!</TorchCommandPrefix>
   <!-- Chat bridge lane control. RelayOnlyPlayerChat=true bridges ONLY real player chat to Discord;
-       plugin/system chat (Cleaner+, TROA Profiler+, server broadcasts - no Steam identity) is skipped.
+       plugin/system chat (Cleaner+, TROA Profiler+, server broadcasts, no Steam identity) is skipped.
        Set false to relay everything. ChatBridgeIgnoredSenders is an extra name blocklist. -->
   <RelayOnlyPlayerChat>true</RelayOnlyPlayerChat>
   <ChatBridgeIgnoredSenders>
@@ -64,11 +64,32 @@
     <string>start</string>
   </AllowedTorchCommands>
   <!-- Security default: false = only AllowedTorchCommands can be forwarded from Discord.
-       Set true only to intentionally allow any Torch/plugin command for trusted admins.
-       Note: even when true, commands that are NOT in AllowedTorchCommands (typically other
-       plugins' commands) are forwarded quietly and logged to the server log only - Monitor+
-       does not post chatter for them or re-badge their output in Discord. -->
+       Set true only to intentionally allow any Torch/plugin command for trusted admins. -->
   <AllowAnyTorchCommand>false</AllowAnyTorchCommand>
+  <!-- true = replies from other plugins' commands (e.g. Hangar+ !hangaradmin status) are posted back to the
+       Discord channel the command came from. false = those replies only go to the server log. -->
+  <ForwardedCommandOutputToDiscord>true</ForwardedCommandOutputToDiscord>
+  <!-- Commands linked players (!link) may run from Discord as themselves, without admin access.
+       Prefixes match whole words. Admin roots such as hangaradmin are always refused here. -->
+  <PlayerTorchCommands>
+    <string>hangar help</string>
+    <string>hangar status</string>
+    <string>hangar list</string>
+    <string>hangar market list</string>
+    <string>hangar market details</string>
+    <string>hangar market search</string>
+    <string>hangar market finance</string>
+    <string>hangar market bid</string>
+    <string>hangar market buy</string>
+    <string>hangar bid</string>
+    <string>hangar buy</string>
+    <string>hangar lease list</string>
+    <string>market commodity list</string>
+    <string>market reputation</string>
+    <string>market analytics</string>
+    <string>blackmarket list</string>
+    <string>factionhangar list</string>
+  </PlayerTorchCommands>
 
   <!-- ============ Feature toggles ============ -->
   <UsePlayerStatus>true</UsePlayerStatus>

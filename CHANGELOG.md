@@ -1,5 +1,20 @@
 # Monitor+ Changelog
 
+## v1.1.5K4 — Other plugins' commands answer in Discord
+
+- **Fixed:** commands for other plugins (for example Hangar+ `!hangaradmin status`) were forwarded to Torch but their replies only went to the server log, so Discord showed nothing. Replies now post back to the channel the command came from, under a neutral "<Server> • Command Result" title (never re-branded as Monitor+). There is still no "Processing/accepted" chatter or audit embed for these commands.
+- Failed forwards (unknown command, bad arguments, plugin error) now reply in the channel with the reason instead of failing silently.
+- Multi-line plugin output is sent as one embed, split across several if it exceeds Discord's 4096-character limit instead of being cut off.
+- New `ForwardedCommandOutputToDiscord` (default `true`; `false` restores the old log-only behaviour).
+- New player lane: linked players (`!link`) can run `PlayerTorchCommands` entries from Discord **as themselves**, for example `!hangar market list`, `!hangar bid <id> <price>`, `!hangar buy <id>`. Commands are forwarded with the player's own Steam ID. Anything needing more than player permission, and admin roots such as `hangaradmin`, is refused. Unlinked players are told how to link.
+- `help` lists the player commands available from Discord.
+- Existing configs gain `ForwardedCommandOutputToDiscord` and `PlayerTorchCommands` automatically on load. `PlayerTorchCommands` and `PlayerDiscordSteamMappings` are re-read on every command, like the other authorization settings.
+
+## v1.1.5K3 — TROA Digest dashboard
+
+- Added the authorized Discord !oval dashboard alias and /adminmonitorplus dashboard command for the persistent TROA Digest server dashboard.
+- Reuses the configured dashboard channel and updates one polished embed in place, with normal Monitor+ administrator authorization and audit logging.
+
 ## v1.1.5K2 — Discord Vote Redemption and In-Game Claim
 
 - Discord `reward` now reserves a durable pending reward for the verified Steam account instead of executing the reward command remotely.
