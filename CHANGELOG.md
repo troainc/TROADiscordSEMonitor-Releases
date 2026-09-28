@@ -1,5 +1,17 @@
 # Monitor+ Changelog
 
+## v1.1.5K7 — XML URL configuration repair
+
+- Repairs bare ampersands in XML configuration values, preserving webhook URLs with multiple query parameters instead of failing config load.
+- Build and package validation passed; dedicated-server runtime acceptance remains pending on the target server.
+
+## v1.1.5K6 — Rewards moved to Admin Overseer
+
+- Removed Monitor+ voting, Discord reward reservations, in-game reward claims, voter leaderboard, and reward-specific configuration and stored history.
+- TROA Admin Overseer v0.8.50 owns vote redemption, pending rewards, claim history, and the voter leaderboard. Its one-time importer can carry pending IDs and vote history from existing Monitor+ storage.
+- Monitor+ retains Discord–Steam account linking and its optional economy balance connector.
+- The v1.1.5K6 release ZIP is available in this repository. Dedicated-server runtime acceptance must be verified on the target server.
+
 ## v1.1.5K4 — Other plugins' commands answer in Discord
 
 - **Fixed:** commands for other plugins (for example Hangar+ `!hangaradmin status`) were forwarded to Torch but their replies only went to the server log, so Discord showed nothing. Replies now post back to the channel the command came from, under a neutral "<Server> • Command Result" title (never re-branded as Monitor+). There is still no "Processing/accepted" chatter or audit embed for these commands.

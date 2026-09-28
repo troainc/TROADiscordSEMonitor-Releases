@@ -1,5 +1,7 @@
 # Monitor+
 
+Current release: **v1.1.5K7**. This version repairs raw ampersands in XML URL values (for example URLs with multiple query parameters), preserving configuration rather than failing to load.
+
 ## Your Space Engineers Server, Visible and Manageable From Discord
 
 `TROADiscordSEMonitor` is a polished Discord companion for **Torch-powered Space Engineers servers**. It gives players clear server information and self-service tools, while giving owners live operational visibility, backups, safety controls, and auditable administration—without publishing private chat or server credentials.
@@ -59,10 +61,14 @@ Commands run three ways, and replies come back as branded embeds (**Monitor+** f
 - **Discord slash commands (recommended)** — grouped under two commands:
   - `/monitorplus <command>` — player commands, available to everyone.
   - `/adminmonitorplus <command>` — administrator commands, hidden from non-admins in Discord.
-- **In-game (`!`)** — player commands work in Space Engineers game chat: `!server`, `!online`, `!rules`, `!discord`, `!support`, `!votelink`, `!topvoters`, `!balance`, `!gridcheck`.
+- **In-game (`!`)** — player commands work in Space Engineers game chat: `!server`, `!online`, `!rules`, `!discord`, `!support`, `!balance`, `!gridcheck`.
 - **Discord text fallback** — the classic `!command` form still works in the command channel.
 
 > Monitor+ stays in its own lane. Even if `AllowAnyTorchCommand=true`, commands that are not in `AllowedTorchCommands` (typically other plugins' commands) get no "Processing/accepted" chatter and no audit embed. The other plugin's own reply is posted back to the channel under a neutral **"<Server> • Command Result"** title, never as Monitor+ (`ForwardedCommandOutputToDiscord`, default `true`; set `false` to send those replies only to the server log). Likewise the chat bridge only relays real player chat, not other plugins' system messages (see `RelayOnlyPlayerChat`).
+
+Voting and rewards belong to **TROA Admin Overseer**. Monitor+ no longer registers vote/reward commands or stores reward state. To preserve existing pending rewards and voter history, use TROA Admin Overseer v0.8.51's one-time migration from the Monitor+ plugin storage directory before removing the old data. Monitor+ keeps Discord–Steam account linking and optional economy balance support.
+
+Edit the generated config in Monitor+'s plugin storage folder. XML URLs with query parameters traditionally require `&amp;` separators; v1.1.5K7 repairs bare ampersands automatically.
 
 ### Running other plugins' commands from Discord (e.g. Hangar+)
 
@@ -76,7 +82,7 @@ Player-facing system announcements use **Monitor+** by default. Server owners ca
 
 ## Why Server Owners Use It
 
-- Keep players informed with live server cards, slash commands, voting, links, and support tools.
+- Keep players informed with live server cards, slash commands, links, and support tools.
 - See the health of the server at a glance: population, simulation speed, grid count, saves, storage, network, versions, and process uptime.
 - Protect player privacy: only global game chat is bridged; faction and direct chat stays on the server.
 - Keep grids clean with clear, in-game compliance reminders and staff audit visibility.
@@ -92,11 +98,11 @@ Player-facing system announcements use **Monitor+** by default. Server owners ca
 - **Player join/leave messages** can be separated into public player-status and staff audit channels.
 - **Grouped Discord slash commands** — `/monitorplus <command>` for players and `/adminmonitorplus <command>` for admins (hidden from non-admins). Player commands also work in-game with `!`; the classic `!command` form still works in the command channel.
 - **Audience-branded embeds** — replies brand as **Monitor+** (players) or **Admin Monitor+** (admins), with a native Discord timestamp and a server-name footer.
-- **Public server dashboard** via `/adminmonitorplus servercard`, showing live players, world grids, simulation speed, CPU/memory, storage, server address, process uptime, voting, support links, and version information.
+- **Public server dashboard** via `/adminmonitorplus servercard`, showing live players, world grids, simulation speed, CPU/memory, storage, server address, process uptime, support links, and version information.
 - **Quick player commands:** `server`, `online`, `rules`, `discord`, `support` (in Discord and in-game).
 - **Economy balance (optional):** players can check their in-game credit balance with `/monitorplus balance` and `!balance`. Reads the server's built-in Space Engineers economy through reflection; off by default (`EnableEconomyConnector`), and reports gracefully when no economy is active.
 - **Player linking** lets players associate Discord with their Steam account using a short in-game confirmation code.
-- **Voting tools:** vote link, Discord reward reservation, secure in-game reward claim, cooldown-aware tracking, ranking, and top-voter leaderboard.
+- **Rewards ownership:** vote links, vote claims, and the leaderboard are provided by TROA Admin Overseer.
 - **Timezone support** for major North American, South American, European, African, Middle Eastern, Asian, and Pacific time zones.
 
 ### World Protection and Privacy
@@ -162,7 +168,7 @@ Use a **full Torch restart** after replacing the DLL. `!reload` reloads configur
 | `PlayerTorchCommands` | Optional | Command prefixes linked players may run from Discord as themselves (defaults cover Hangar+ browsing, bids, and buys, e.g. `hangar market list`, `hangar bid`, `hangar buy`). Whole-word match; admin roots and admin-level commands are always refused. |
 | `BackupDirectory` | Optional | Leave blank to automatically use `Saves\\Backups`. |
 
-The generated config lists only the settings owners tune (about 60). Everything else uses sensible built-in defaults. Never publish a live `.cfg` file — it may contain a bot token and voting API credentials.
+The generated config lists only the settings owners tune (about 60). Everything else uses sensible built-in defaults. Never publish a live `.cfg` file — it may contain a bot token or other server credentials.
 
 ## Discord Channels
 
@@ -187,15 +193,11 @@ Keep the command channel private to staff -- Discord acts as an authenticated pa
 | `rules` | Shows the configured server rules. |
 | `discord` | Shows the configured community Discord link. |
 | `support` | Shows the configured website, support portal, and support email. |
-| `votelink` | Opens the Space Engineers server-list voting page. |
-| `reward` | Reserves an eligible vote reward for the linked Steam account (Discord). |
-| `claimreward` | Claims a Discord-reserved vote reward from Space Engineers game chat. |
-| `topvoters` | Shows the voting leaderboard. |
 | `balance` | Shows your in-game credit balance (requires `EnableEconomyConnector=true`). |
 | `link <steam-id-64>` / `link-confirm <code>` | Links a Discord account to Steam via a one-time in-game code (Discord). |
 | `help` | Shows the command guide. |
 
-Player commands `server`, `online`, `rules`, `discord`, `support`, `votelink`, `topvoters`, `balance`, and `gridcheck` also work **in-game** with `!`. Discord `reward` reserves a linked SteamID reward; use `!claimreward` in-game to deliver it.
+Player commands `server`, `online`, `rules`, `discord`, `support`, `balance`, and `gridcheck` also work **in-game** with `!`. Use TROA Admin Overseer for vote links, Discord reward reservations, and in-game reward claims.
 
 ## Owner and Administrator Commands ( `/adminmonitorplus <command>` )
 
