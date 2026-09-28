@@ -1,4 +1,11 @@
 # Monitor+ Changelog
+## v1.1.5K9 — Text command groups
+
+- Added Discord text command groups `!monitorplus <command>` and `!adminmonitorplus <command>`; the admin group still passes through Monitor+'s Discord and Steam authorization checks.
+- Updated Monitor+ bot help to show the text command syntax. Existing short `!command` aliases and in-game player commands remain available.
+- Reworked the README as a setup/use guide and moved the full command list into `COMMANDS.md`.
+- Voting and rewards remain owned by Admin Overseer; this change adds no Monitor+-owned feature or webhook behavior. Build/package validation passed; live Discord/Torch runtime acceptance remains pending. Public package SHA-256: `555265B29C0515C0F1226C57434125EB6251AB2F4E5AF2E84B0C7525A6F25711`.
+
 
 ## v1.1.5K8 — Plugin command ownership and Monitor-only scope
 
