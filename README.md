@@ -1,10 +1,10 @@
 # Monitor+
 
-Current release: **v1.1.5K7**. This version repairs raw ampersands in XML URL values (for example URLs with multiple query parameters), preserving configuration rather than failing to load.
+Current release: **v1.1.5K8** — Monitor+ owns monitoring and Discord transport; Econ+, Profiler+, Admin Overseer, Hangar+, GridVault, and Cleaner+ own their commands and webhooks.
 
 ## Your Space Engineers Server, Visible and Manageable From Discord
 
-`TROADiscordSEMonitor` is a polished Discord companion for **Torch-powered Space Engineers servers**. It gives players clear server information and self-service tools, while giving owners live operational visibility, backups, safety controls, and auditable administration—without publishing private chat or server credentials.
+`TROADiscordSEMonitor` is a Discord bridge and server-monitoring plugin for **Torch-powered Space Engineers servers**. It provides server visibility, chat relay, account linking, and a reliable command path to the plugins that own game features.
 
 Built for **.NET Framework 4.8** and **C# 5-compatible** Torch environments.
 
@@ -35,17 +35,16 @@ To get a channel or user ID, enable **Developer Mode** in Discord (User Settings
 
 See **How Commands Work** below for the three ways to run commands. Quick examples:
 
-- Players: `/monitorplus server`, `/monitorplus rules`, `/monitorplus balance` — or in-game `!server`, `!balance`, `!gridcheck`.
-- Admins: `/adminmonitorplus status`, `/adminmonitorplus backupnow`, `/adminmonitorplus servercard`.
+- Players: `/monitorplus server`, `/monitorplus rules` — or in-game `!server`, `!gridcheck`.
+- Admins: `/adminmonitorplus status`, `/adminmonitorplus servercard`; send owner-plugin commands such as `!ova`, `!econadmin`, `!gridvault`, and `!cleanerplusadmin` in the configured command channel.
 
 ### 5. Common tasks
 
 | I want to… | Do this |
 | --- | --- |
 | See server status | `/monitorplus server` (players) or `/adminmonitorplus status` (detailed) |
-| Check my credit balance | `/monitorplus balance` (Discord) or `!balance` (in-game) — needs `EnableEconomyConnector=true` |
-| Take a backup now | `/adminmonitorplus backupnow` |
-| Schedule backups | `/adminmonitorplus backupschedule every 60` |
+| Run an Econ+ command | Send the plugin's own command in the Monitor+ command channel |
+| Back up or recover a grid | Use GridVault's `!gridvault` commands |
 | Silence grid warnings | Set `EnableGridComplianceWarnings=false`, then `!reload` |
 | Stop other plugins' chat reaching Discord | Leave `RelayOnlyPlayerChat=true` (default) — only real player chat is bridged |
 | Let players link their account | They run `/monitorplus link <steam-id>`, then `/monitorplus link-confirm <code>` (code shown in-game) |
@@ -56,24 +55,22 @@ See **How Commands Work** below for the three ways to run commands. Quick exampl
 
 ## How Commands Work
 
-Commands run three ways, and replies come back as branded embeds (**Monitor+** for players, **Admin Monitor+** for admins):
+Monitor+ commands use the Monitor+ presentation. Forwarded commands return the owning plugin's response text through the Discord bot:
 
 - **Discord slash commands (recommended)** — grouped under two commands:
   - `/monitorplus <command>` — player commands, available to everyone.
   - `/adminmonitorplus <command>` — administrator commands, hidden from non-admins in Discord.
-- **In-game (`!`)** — player commands work in Space Engineers game chat: `!server`, `!online`, `!rules`, `!discord`, `!support`, `!balance`, `!gridcheck`.
+- **In-game (`!`)** — Monitor+ player commands work in Space Engineers game chat: `!server`, `!online`, `!rules`, `!discord`, `!support`, `!gridcheck`.
 - **Discord text fallback** — the classic `!command` form still works in the command channel.
 
-> Monitor+ stays in its own lane. Even if `AllowAnyTorchCommand=true`, commands that are not in `AllowedTorchCommands` (typically other plugins' commands) get no "Processing/accepted" chatter and no audit embed. The other plugin's own reply is posted back to the channel under a neutral **"<Server> • Command Result"** title, never as Monitor+ (`ForwardedCommandOutputToDiscord`, default `true`; set `false` to send those replies only to the server log). Likewise the chat bridge only relays real player chat, not other plugins' system messages (see `RelayOnlyPlayerChat`).
+> Monitor+ is the command transport, not the owner of forwarded commands. Commands registered by Econ+, Profiler+, Admin Overseer, Hangar+, GridVault, and Cleaner+ pass through without command-list setup. Their replies are returned in the originating channel through Monitor+'s Discord bot connection; Monitor+ does not post them through its own webhooks. The chat bridge separately relays real player chat, not plugin system messages (see `RelayOnlyPlayerChat`).
 
-Voting and rewards belong to **TROA Admin Overseer**. Monitor+ no longer registers vote/reward commands or stores reward state. To preserve existing pending rewards and voter history, use TROA Admin Overseer v0.8.51's one-time migration from the Monitor+ plugin storage directory before removing the old data. Monitor+ keeps Discord–Steam account linking and optional economy balance support.
-
-Edit the generated config in Monitor+'s plugin storage folder. XML URLs with query parameters traditionally require `&amp;` separators; v1.1.5K7 repairs bare ampersands automatically.
+Voting and rewards are handled by **TROA Admin Overseer**. To move existing Monitor+ reward reservations and voter history, start TROA Admin Overseer once to create its Rewards config, stop Torch, set `LegacyMonitorStorageDirectory` to Monitor+'s storage directory, then start a game session to import the data. Confirm the import in the TROA Admin Overseer log before removing Monitor+. Use its commands (`!ov vote`, `!ov claim`, `!ov rewards`, `!ov topvoters`; Discord `/adminoverseer reward`).
 
 ### Running other plugins' commands from Discord (e.g. Hangar+)
 
-- **Administrators** can run any forwarded plugin command in the command channel, for example `!hangaradmin status` or `!hangaradmin webhook test`. It needs `AllowAnyTorchCommand=true`, or the command root (e.g. `hangaradmin`) in `AllowedTorchCommands`. The plugin's reply appears in the same channel.
-- **Linked players** (`!link <steam-id-64>` once) can run the commands in `PlayerTorchCommands` **as themselves**, even while offline. Examples: `!hangar market list`, `!hangar bid <market-id> <price>`, `!hangar buy <market-id>`, `!hangar list`. Monitor+ forwards these with the player's own Steam ID and refuses anything that needs more than player permission. Admin roots such as `hangaradmin` are never allowed in this list.
+- **Administrators** can run commands registered by any of the six owner plugins in the command channel, including each plugin's admin and webhook-management commands. These commands do not need `AllowAnyTorchCommand` or an `AllowedTorchCommands` entry. Other Torch commands still follow those settings.
+- **Linked players** (`!link <steam-id-64>` once) can run any Torch command declared player-level **as themselves**, even while offline. Monitor+ forwards the mapped Steam ID and refuses commands whose Torch permission level is above player. Commands needing an active character can still require in-game use.
 - Commands that need your character in the world (store, load, claim, sell/look-at, LCD setup) only work in game. From Discord they reply with a short "use this in game" message.
 
 ## Monitor+ In-Game Identity and Save Messages
@@ -86,7 +83,7 @@ Player-facing system announcements use **Monitor+** by default. Server owners ca
 - See the health of the server at a glance: population, simulation speed, grid count, saves, storage, network, versions, and process uptime.
 - Protect player privacy: only global game chat is bridged; faction and direct chat stays on the server.
 - Keep grids clean with clear, in-game compliance reminders and staff audit visibility.
-- Make safer operations practical: save requests, announcements, dated backups, and manual restore requests.
+- Keep monitoring, status, chat, and server communications available without taking over other plugins' operations.
 - Keep the configuration lean. It contains the channels and essential server details—not an ever-growing list of operational settings (about 60 settings, down from ~140).
 
 ## Complete Feature Set
@@ -100,9 +97,8 @@ Player-facing system announcements use **Monitor+** by default. Server owners ca
 - **Audience-branded embeds** — replies brand as **Monitor+** (players) or **Admin Monitor+** (admins), with a native Discord timestamp and a server-name footer.
 - **Public server dashboard** via `/adminmonitorplus servercard`, showing live players, world grids, simulation speed, CPU/memory, storage, server address, process uptime, support links, and version information.
 - **Quick player commands:** `server`, `online`, `rules`, `discord`, `support` (in Discord and in-game).
-- **Economy balance (optional):** players can check their in-game credit balance with `/monitorplus balance` and `!balance`. Reads the server's built-in Space Engineers economy through reflection; off by default (`EnableEconomyConnector`), and reports gracefully when no economy is active.
+- **Command pass-through:** sends supported plugin commands to Torch and returns their responses to the same Discord channel.
 - **Player linking** lets players associate Discord with their Steam account using a short in-game confirmation code.
-- **Rewards ownership:** vote links, vote claims, and the leaderboard are provided by TROA Admin Overseer.
 - **Timezone support** for major North American, South American, European, African, Middle Eastern, Asian, and Pacific time zones.
 
 ### World Protection and Privacy
@@ -123,18 +119,10 @@ Player-facing system announcements use **Monitor+** by default. Server owners ca
 - **Player lookup** helps staff identify online player names and IDs.
 - **In-game announcements** can be sent from Discord and recorded in the command audit.
 - **World save control** gives authorized staff a safe save request without direct server access.
-- **Controlled Torch forwarding** lets owners expose only explicitly allowed Torch commands, including `restart` when listed in `AllowedTorchCommands`, to trusted Discord administrators. Commands outside the allow-list (typically other plugins') are forwarded without Monitor+ chatter, and their reply is posted under a neutral "Command Result" title, so Monitor+ never re-brands another plugin's output as its own.
+- **Plugin command transport** passes commands from Econ+, Profiler+, Admin Overseer, Hangar+, GridVault, and Cleaner+ directly to their registered Torch handlers. Responses return to the originating Discord channel through Monitor+'s bot connection; plugin webhooks remain owned by their plugins.
 - **Channel and administrator setup tools** make it easy to collect IDs, set the server port, and maintain authorized staff mappings.
 - **Optional webhook** provides alternate delivery when a channel post fails.
 - **Optional rotating advertisements** can be sent to Discord, in-game, or both.
-
-### Backups and Recovery Workflow
-
-- **Manual snapshots:** `backupnow` copies the loaded world to a dated backup folder.
-- **Automatic backup discovery:** blank `BackupDirectory` uses the world's sibling `Saves\\Backups` folder.
-- **Owner-controlled scheduling:** back up after startup, every chosen number of minutes, or both. Interval scheduling has a five-minute minimum and defaults to off.
-- **Backup browser commands** show detected snapshots, timestamps, sizes, and local locations in branded embeds.
-- **Safe restore workflow:** restore requests are audited only; the plugin never changes world files automatically.
 
 ## Install
 
@@ -162,13 +150,11 @@ Use a **full Torch restart** after replacing the DLL. `!reload` reloads configur
 | `ChatBridgeIgnoredSenders` | Optional | Extra list of in-game sender names never bridged to Discord (backstop for a plugin that chats under a real Steam ID). Defaults: `Cleaner+`, `TROA Profiler+`, `Monitor+`, `Server`. |
 | `EnableGridComplianceWarnings` | Optional | Master on/off switch for World Protection and Privacy (grid-compliance) monitoring. `true` (default) sends new-grid warnings, reminders, and audits; set to `false` to turn the whole feature off. Takes effect on `!reload`. |
 | `GridComplianceLogChannelId` | Optional | Channel for grid-compliance audit records. |
-| `EnableEconomyConnector` | Optional | `false` (default) hides the balance command. Set `true` to let players check their in-game credit balance with `/monitorplus balance` and `!balance` (reads the built-in Space Engineers economy through reflection; degrades gracefully if none is active). |
-| `AllowAnyTorchCommand` | Optional | `false` (default) allows only `AllowedTorchCommands` from Discord; `true` forwards any Torch/plugin command for trusted admins. Commands outside the allow-list get no Monitor+ chatter or audit embed; their plugin's reply is posted under a neutral "Command Result" title. |
-| `ForwardedCommandOutputToDiscord` | Optional | `true` (default) posts other plugins' command replies (e.g. Hangar+ `!hangaradmin status`) back to the channel the command came from. `false` sends them only to the server log. |
-| `PlayerTorchCommands` | Optional | Command prefixes linked players may run from Discord as themselves (defaults cover Hangar+ browsing, bids, and buys, e.g. `hangar market list`, `hangar bid`, `hangar buy`). Whole-word match; admin roots and admin-level commands are always refused. |
-| `BackupDirectory` | Optional | Leave blank to automatically use `Saves\\Backups`. |
+| `AllowAnyTorchCommand` | Optional | `false` (default) still passes commands owned by Econ+, Profiler+, Admin Overseer, Hangar+, GridVault, and Cleaner+, and explicit `AllowedTorchCommands` entries. Set `true` to pass any Torch command for authorized Discord administrators. Linked players can run player-level commands; higher Torch permission levels are refused. |
 
-The generated config lists only the settings owners tune (about 60). Everything else uses sensible built-in defaults. Never publish a live `.cfg` file — it may contain a bot token or other server credentials.
+The generated config lists only the settings owners tune (about 60). Everything else uses sensible built-in defaults. Never publish a live `.cfg` file — it may contain a bot token or webhook URL.
+
+Edit the generated file in Monitor+'s plugin storage folder. If a configured URL contains query parameters, XML normally requires `&amp;` between them; Monitor+ v1.1.5K7 repairs bare ampersands and preserves the URL automatically.
 
 ## Discord Channels
 
@@ -193,11 +179,10 @@ Keep the command channel private to staff -- Discord acts as an authenticated pa
 | `rules` | Shows the configured server rules. |
 | `discord` | Shows the configured community Discord link. |
 | `support` | Shows the configured website, support portal, and support email. |
-| `balance` | Shows your in-game credit balance (requires `EnableEconomyConnector=true`). |
 | `link <steam-id-64>` / `link-confirm <code>` | Links a Discord account to Steam via a one-time in-game code (Discord). |
 | `help` | Shows the command guide. |
 
-Player commands `server`, `online`, `rules`, `discord`, `support`, `balance`, and `gridcheck` also work **in-game** with `!`. Use TROA Admin Overseer for vote links, Discord reward reservations, and in-game reward claims.
+Player commands `server`, `online`, `rules`, `discord`, `support`, and `gridcheck` also work **in-game** with `!`. Economy commands belong to Econ+; vote and reward commands belong to TROA Admin Overseer.
 
 ## Owner and Administrator Commands ( `/adminmonitorplus <command>` )
 
@@ -211,11 +196,6 @@ Run these as `/adminmonitorplus <command>` (recommended) or with the `!` fallbac
 | `gridstatus` | Lists player grids needing compliance work. |
 | `gridlog on\|off\|status` | Controls Discord compliance audit output; in-game warnings continue. |
 | `playerlookup <name-or-steam-id>` | Finds an online player's IDs. |
-| `backups` | Lists detected backup folders with dates and sizes. |
-| `backupnow` | Creates a dated snapshot of the loaded world. |
-| `backupschedule status\|startup on\|off\|every <minutes\|off>` | Shows or sets startup and interval backups (five-minute minimum). |
-| `backupinfo <name>` | Shows a backup's date, size, and local path. |
-| `restorerequest <name>` | Records a restore request without changing files. |
 | `announce <message>` | Sends an in-game and Discord announcement. |
 | `save` | Requests a world save. |
 | `addadmin <discord-id>` | Adds a Discord administrator. |
@@ -228,27 +208,14 @@ Run these as `/adminmonitorplus <command>` (recommended) or with the `!` fallbac
 ## Safety, Privacy, and Limits
 
 - The monitor **does not delete grids**. It communicates requirements and records compliance status for staff.
-- The monitor **does not automatically restore backups**. A restore needs normal host/server-owner action with Torch stopped.
-- **Stays in its own lane.** Monitor+ only posts Discord confirmations for its own curated server commands (`AllowedTorchCommands`). Other plugins' commands get no Monitor+ chatter; their own reply is shown under a neutral "Command Result" title and is never re-branded as Monitor+.
-- **Player lane is permission-checked.** Linked players can only run `PlayerTorchCommands` entries, as themselves, and never a command that needs more than player permission. The chat bridge relays only real player chat, not other plugins' system messages.
+- Monitor+ does not own grid backups or recovery; GridVault owns those operations.
+- Each plugin owns its commands, command policies, and webhooks. Monitor+ only routes the command and response through Discord.
+- **Player lane is permission-checked.** Linked players run commands as themselves and can run only commands Torch declares player-level. Monitor+ enforces `MinimumPromoteLevel`; admin commands remain available only to authorized Discord administrators. The chat bridge relays only real player chat, not other plugins' system messages.
 - Keep `AllowedTorchCommands` small and only grant administrator mappings to trusted staff.
-- Full backups remain on the server. Download them through AMP or your host's file manager.
 
-## Roadmap
+### TROA Digest administrator dashboard
 
-Planned and in-progress work. Scope and timing may change.
-
-### Next -- v1.1.4K.3
-
-- **Online player list** -- `!players` (Discord command channel + in-game, alias in-game `!who`) lists everyone currently connected with **name, Steam ID, and live ping**. Admin-gated; long lists cap at 30 with an "N more" tail. Per-player ping is best-effort with an `n/a` + aggregate fallback when a host cannot key ping per player.
-
-### Under consideration
-
-- `/players` slash parity under the `/adminmonitorplus` group.
-- Optional public, names-only variant of the player list for players.
-- Confirm per-player ping keying across AMP / Wine hosts.
-
-Have a request? Open an issue or raise it in the staff channel.
+Set `EnableStatusDashboard=true` and choose `StatusDashboardChannelId`. An authorized mapped administrator can use `!oval dashboard` or `/adminmonitorplus dashboard` to refresh the polished, persistent dashboard card. The card updates in place instead of filling the channel with duplicates; it uses the configured Monitor+ Discord connection and does not require a second webhook URL.
 
 ## Public Release Contents
 

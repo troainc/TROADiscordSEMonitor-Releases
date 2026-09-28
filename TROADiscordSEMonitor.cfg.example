@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Monitor+ configuration. Only the settings owners actually tune are listed here;
      everything else uses sensible built-in defaults. Never publish a live config -
-     it contains your bot token and vote API key. -->
+     it contains your bot token and webhook URLs. -->
 <BridgeConfig>
 
   <!-- ============ Core connection ============ -->
@@ -63,33 +63,11 @@
     <string>stop</string>
     <string>start</string>
   </AllowedTorchCommands>
-  <!-- Security default: false = only AllowedTorchCommands can be forwarded from Discord.
-       Set true only to intentionally allow any Torch/plugin command for trusted admins. -->
+  <!-- Named TROA plugins (Econ+, Profiler+, Admin Overseer, Hangar+, GridVault, Cleaner+) always
+       receive their own commands without adding their roots here. Linked players are still limited
+       to commands Torch declares player-level. AllowAnyTorchCommand controls other admin commands. -->
   <AllowAnyTorchCommand>false</AllowAnyTorchCommand>
-  <!-- true = replies from other plugins' commands (e.g. Hangar+ !hangaradmin status) are posted back to the
-       Discord channel the command came from. false = those replies only go to the server log. -->
-  <ForwardedCommandOutputToDiscord>true</ForwardedCommandOutputToDiscord>
-  <!-- Commands linked players (!link) may run from Discord as themselves, without admin access.
-       Prefixes match whole words. Admin roots such as hangaradmin are always refused here. -->
-  <PlayerTorchCommands>
-    <string>hangar help</string>
-    <string>hangar status</string>
-    <string>hangar list</string>
-    <string>hangar market list</string>
-    <string>hangar market details</string>
-    <string>hangar market search</string>
-    <string>hangar market finance</string>
-    <string>hangar market bid</string>
-    <string>hangar market buy</string>
-    <string>hangar bid</string>
-    <string>hangar buy</string>
-    <string>hangar lease list</string>
-    <string>market commodity list</string>
-    <string>market reputation</string>
-    <string>market analytics</string>
-    <string>blackmarket list</string>
-    <string>factionhangar list</string>
-  </PlayerTorchCommands>
+  <!-- Replies from forwarded commands are always returned in the originating Discord channel. -->
 
   <!-- ============ Feature toggles ============ -->
   <UsePlayerStatus>true</UsePlayerStatus>
@@ -128,25 +106,6 @@
   <PlayerDiscordUrl></PlayerDiscordUrl>
   <EnablePlayerSelfLinking>true</EnablePlayerSelfLinking>
   <PlayerDiscordSteamMappings />
-
-  <!-- ============ Backups ============ -->
-  <!-- Blank BackupDirectory auto-detects the Backups folder beside the world's Saves. -->
-  <BackupDirectory></BackupDirectory>
-  <BackupListCount>10</BackupListCount>
-
-  <!-- ============ Voting ============ -->
-  <EnableVoting>true</EnableVoting>
-  <EnableVoteLeaderboard>true</EnableVoteLeaderboard>
-  <VoteLeaderboardCount>10</VoteLeaderboardCount>
-  <SpaceEngineersVotePageUrl>https://space-engineers.com/server/244351/</SpaceEngineersVotePageUrl>
-  <SpaceEngineersVoteApiKey></SpaceEngineersVoteApiKey>
-  <VoteRewardTorchCommand></VoteRewardTorchCommand>
-
-  <!-- ============ Economy connector (optional) ============ -->
-  <!-- true lets players check their credit balance via /monitorplus balance (Discord)
-       and !balance (in-game). Reads the server's built-in Space Engineers economy through
-       reflection, so it stays off by default and fails gracefully if no economy is active. -->
-  <EnableEconomyConnector>false</EnableEconomyConnector>
 
   <!-- ============ Support / links ============ -->
   <ConnectWebsiteUrl>https://therealmsofasgard.com</ConnectWebsiteUrl>

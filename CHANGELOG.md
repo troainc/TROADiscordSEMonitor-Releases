@@ -1,16 +1,31 @@
 # Monitor+ Changelog
 
+## v1.1.5K8 — Plugin command ownership and Monitor-only scope
+
+- Removed Monitor+'s built-in economy balance connector; Econ+ owns all economy and balance commands.
+- Removed Monitor+'s backup browser, world snapshot scheduler, and restore-request commands; GridVault owns grid backup and recovery.
+- Discord command forwarding now recognizes commands registered by Econ+, Profiler+, Admin Overseer, Hangar+, GridVault, and Cleaner+ without requiring Monitor allow-list entries.
+- Linked players can invoke any Torch command declared player-level as their linked Steam identity; elevated commands remain blocked. Authorized administrators retain the configured allow-list and allow-all controls for other Torch commands.
+- Forwarded replies are always returned through Monitor+'s Discord bot connection to the originating channel; Monitor+ no longer falls back to its own webhook for another plugin's response.
+- Removed obsolete balance, linked-player command-list, forwarded-output, and backup settings from generated configuration and examples.
+
 ## v1.1.5K7 — XML URL configuration repair
 
 - Repairs bare ampersands in XML configuration values, preserving webhook URLs with multiple query parameters instead of failing config load.
-- Build and package validation passed; dedicated-server runtime acceptance remains pending on the target server.
+- The repair only escapes ampersands that do not begin valid XML entities; unrelated invalid XML still reports its original load error.
+- Build/package validation and runtime acceptance are tracked in `LOGS.md`.
 
 ## v1.1.5K6 — Rewards moved to Admin Overseer
 
-- Removed Monitor+ voting, Discord reward reservations, in-game reward claims, voter leaderboard, and reward-specific configuration and stored history.
-- TROA Admin Overseer v0.8.50 owns vote redemption, pending rewards, claim history, and the voter leaderboard. Its one-time importer can carry pending IDs and vote history from existing Monitor+ storage.
-- Monitor+ retains Discord–Steam account linking and its optional economy balance connector.
-- The v1.1.5K6 release ZIP is available in this repository. Dedicated-server runtime acceptance must be verified on the target server.
+- Removed Monitor+ vote links, voting dashboard/API calls, Discord reward reservation, in-game `!claimreward`, voter leaderboard, and reward-specific configuration/storage.
+- TROA Admin Overseer now owns vote claims, Discord reservations, pending claims, reward history, and leaderboard; migrate existing state by configuring its `LegacyMonitorStorageDirectory` before removing the old Monitor+ installation.
+- Retained Monitor+ account linking and optional economy balance support for their non-reward command flows.
+
+## v1.1.5K5 — Allow-all needs no command lists
+
+- With `AllowAnyTorchCommand=true` you no longer have to list commands for them to work through Discord. Admins already ran any command; now **linked players** can run any command too, automatically bounded to player-level (`MyPromoteLevel.None`) commands — admin/server commands are still refused for non-admins. `PlayerTorchCommands` is only consulted when `AllowAnyTorchCommand=false`.
+- Administrators now always use the administrator lane and are never routed through (or downgraded by) the player lane. This also fixes a case where a linked admin running a listed command could be wrongly refused as "needs administrator access."
+- No behaviour change when `AllowAnyTorchCommand=false`: `PlayerTorchCommands` governs the player lane exactly as before.
 
 ## v1.1.5K4 — Other plugins' commands answer in Discord
 
@@ -28,10 +43,8 @@
 - Reuses the configured dashboard channel and updates one polished embed in place, with normal Monitor+ administrator authorization and audit logging.
 
 ## v1.1.5K2 — Discord Vote Redemption and In-Game Claim
-
-- Discord `reward` now reserves a durable pending reward for the verified Steam account instead of executing the reward command remotely.
-- Added native in-game `!claimreward`; the matching Steam account claims the queued reward through the configured `VoteRewardTorchCommand`.
-- A failed or unavailable reward command leaves the pending reward intact so the player can try again later.
+- Discord reward redemption now reserves a durable pending reward against the verified SteamID.
+- Added in-game `!claimreward`; reward delivery happens only when that Steam account claims it in-game.
 
 ## v1.1.5K — Restart Control Removed
 
@@ -40,6 +53,15 @@
 - Removed restart-scheduler settings from newly generated and example configurations. Existing configurations remain compatible because obsolete XML elements are ignored during load.
 - Manual Torch command forwarding remains available: administrators may still allow `restart` through `AllowedTorchCommands`, alongside the existing `save`, `stop`, and `start` entries.
 - Restart management now belongs to the dedicated restart plugin; Monitor+ keeps ordinary monitoring, saves, backups, Discord reconnects, reloads, uptime reporting, and command forwarding.
+
+## Unreleased — v1.1.4K.3 (in progress)
+
+### Online player list
+
+- Adds `!players` (Discord command channel + in-game, alias in-game `!who`): lists everyone currently connected with name, Steam ID, and live ping. Admin-gated; long lists cap at 30 with an "N more not shown" tail.
+- Per-player ping extends the existing replication-layer ping reflection to key ping per player, with an `n/a` + aggregate fallback when a host cannot resolve per-player ping.
+
+> Tracked on the [roadmap](ROADMAP.md). This section moves to a dated release entry when the v1.1.4K.3 binary ships.
 
 ## v1.1.4K.2 — Chat Bridge Stays in Its Own Lane
 
@@ -143,6 +165,8 @@ Every command the documentation advertises now works on the Monitor+ build as bo
 - `/servercard` is the preferred public dashboard command.
 - `!status` returns the detailed server card to administrators while players receive a concise public summary.
 - Only global game chat is bridged to Discord. Faction, direct/private, `/f`, and `./f` chat remain private and are recorded in the server log only.
+- New configuration files default `EnableRestartScheduler` to `false`.
+- Existing configuration values are preserved. The plugin does not overwrite an explicitly configured restart-scheduler setting.
 - Generated configuration is compacted to essential connection, channel, ownership, support, voting, and backup values.
 
 ### Fixed
@@ -169,3 +193,11 @@ Every command the documentation advertises now works on the Monitor+ build as bo
 ## v1.0.0 — Initial Public Release
 
 - Initial public TROADiscordSEMonitor package.
+## v1.1.5K8 — Plugin command ownership and Monitor-only scope
+
+- Removed Monitor+'s built-in economy balance connector; Econ+ owns all economy and balance commands.
+- Removed Monitor+'s backup browser, world snapshot scheduler, and restore-request commands; GridVault owns grid backup and recovery.
+- Discord command forwarding now recognizes commands registered by Econ+, Profiler+, Admin Overseer, Hangar+, GridVault, and Cleaner+ without requiring Monitor allow-list entries.
+- Linked players can invoke any Torch command declared player-level as their linked Steam identity; elevated commands remain blocked. Authorized administrators retain the configured allow-list and allow-all controls for other Torch commands.
+- Forwarded replies are always returned through Monitor+'s Discord bot connection to the originating channel; Monitor+ no longer falls back to its own webhook for another plugin's response.
+- Removed obsolete balance, linked-player command-list, forwarded-output, and backup settings from generated configuration and examples.
