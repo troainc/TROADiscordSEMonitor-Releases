@@ -1,6 +1,6 @@
 # Monitor+
 
-Current release: **v1.1.5K9**. Monitor+ handles server monitoring, Discord chat transport, account linking, and forwarding commands to the plugin that owns them. It does not own another plugin’s commands or webhooks.
+Current release: **v1.1.5K10**. Monitor+ handles server monitoring, global player-chat transport, account linking, and forwarding commands to the plugin that owns them. Only global chat is sent to Discord; faction and direct/private chat remain in game. It does not own another plugin’s commands or webhooks.
 
 ## How to use Monitor+
 

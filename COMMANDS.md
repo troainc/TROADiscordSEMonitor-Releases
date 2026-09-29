@@ -2,6 +2,8 @@
 
 The Discord examples below use the default `!` prefix and are sent in the configured command channel. If `CommandPrefix` is changed, replace `!` with that prefix. Monitor+ also keeps short command aliases for compatibility. In-game commands are typed in Space Engineers chat.
 
+The chat bridge sends only global player chat to Discord. Faction and direct/private messages stay in game.
+
 ## Player commands in Discord
 
 | Command | Purpose |

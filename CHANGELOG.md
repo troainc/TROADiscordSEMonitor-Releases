@@ -1,4 +1,11 @@
 # Monitor+ Changelog
+## v1.1.5K10 — Keep faction and private chat in game
+
+- Discord chat forwarding now accepts only Torch's `Global` chat channel. Faction and direct/private channels are never forwarded, even when the message is authored by a real player.
+- No configuration change. Existing global chat formatting, command forwarding, and plugin-owned webhooks remain unchanged.
+- Build/package validation passed. Dedicated-server Torch/Discord runtime acceptance remains pending.
+- Package: `TROADiscordSEMonitor-v1.1.5K10.zip`; SHA-256 `0C34A2E5BBB0E6342977B9EA677C0D82296CFD69E7156050F3F75B604483B1A5`.
+
 ## v1.1.5K9 — Text command groups
 
 - Added Discord text command groups `!monitorplus <command>` and `!adminmonitorplus <command>`; the admin group still passes through Monitor+'s Discord and Steam authorization checks.
