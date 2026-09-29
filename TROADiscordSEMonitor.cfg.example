@@ -103,7 +103,8 @@
 
   <!-- ============ Player commands ============ -->
   <PlayerRulesMessage>Follow server rules, respect other players, and keep grids compliant before cleanup.</PlayerRulesMessage>
-  <PlayerDiscordUrl></PlayerDiscordUrl>
+  <!-- Community invite shown by !monitorplus discord and !discord. Replace with your server invite if desired. -->
+  <PlayerDiscordUrl>https://discord.gg/troainc</PlayerDiscordUrl>
   <EnablePlayerSelfLinking>true</EnablePlayerSelfLinking>
   <PlayerDiscordSteamMappings />
 

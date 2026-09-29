@@ -1,4 +1,10 @@
 # Monitor+ Changelog
+## v1.1.5K11 — Restore Discord invite response
+
+- `!monitorplus discord` and in-game `!discord` now show the TROA community invite if `PlayerDiscordUrl` is blank, including in existing configs that saved an empty value.
+- Added a visible `PlayerDiscordUrl` example with an explanatory comment so owners can set their own community invite.
+- `TROADiscordSEMonitor-v1.1.5K11.zip` contains the plugin DLL, manifest, and public-safe config example. SHA-256 `54C3B1B1C9A04A409AFF1FD92136F6DDD3C3C0F13B4CB05278AFA41AD4EAC762`. Dedicated-server Discord runtime acceptance is pending.
+
 ## v1.1.5K10 — Keep faction and private chat in game
 
 - Discord chat forwarding now accepts only Torch's `Global` chat channel. Faction and direct/private channels are never forwarded, even when the message is authored by a real player.

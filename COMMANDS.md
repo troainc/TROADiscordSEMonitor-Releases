@@ -12,7 +12,7 @@ The chat bridge sends only global player chat to Discord. Faction and direct/pri
 | `!monitorplus server` | Show the public server summary. |
 | `!monitorplus online` | Show the public server summary. |
 | `!monitorplus rules` | Show the configured server rules. |
-| `!monitorplus discord` | Show the community Discord link. |
+| `!monitorplus discord` | Show the configured Discord invite. Uses the TROA community invite if `PlayerDiscordUrl` is blank. |
 | `!monitorplus support` | Show configured support details. |
 | `!monitorplus link <steam-id-64>` | Begin linking your Discord identity to your Steam account. You must be online to receive the code. |
 | `!monitorplus link-confirm <code>` | Complete account linking with the code sent in-game. `!monitorplus link confirm <code>` also works. |
@@ -48,7 +48,7 @@ These commands require a configured Monitor+ administrator identity.
 | `!server` | Show the public server summary. |
 | `!online` | Show the public server summary. |
 | `!rules` | Show configured server rules. |
-| `!discord` | Show the community Discord link. |
+| `!discord` | Show the configured Discord invite. Uses the TROA community invite if `PlayerDiscordUrl` is blank. |
 | `!support` | Show configured support details. |
 | `!gridcheck` | Check your major-owned grids for the configured compliance requirements. |
 | `!gridcheck help` | Explain grid-compliance requirements. |

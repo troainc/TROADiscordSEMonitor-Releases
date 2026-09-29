@@ -1,6 +1,6 @@
 # Monitor+
 
-Current release: **v1.1.5K10**. Monitor+ handles server monitoring, global player-chat transport, account linking, and forwarding commands to the plugin that owns them. Only global chat is sent to Discord; faction and direct/private chat remain in game. It does not own another plugin’s commands or webhooks.
+Current release: **v1.1.5K11**. Monitor+ handles server monitoring, global player-chat transport, account linking, and forwarding commands to the plugin that owns them. Only global chat is sent to Discord; faction and direct/private chat remain in game. It does not own another plugin’s commands or webhooks.
 
 ## How to use Monitor+
 
@@ -14,6 +14,8 @@ Current release: **v1.1.5K10**. Monitor+ handles server monitoring, global playe
 6. After changing settings, run `!adminmonitorplus reload` in the command channel.
 
 Keep the bot token, webhook URLs, channel IDs, and live config private. The public [sample config](TROADiscordSEMonitor.cfg.example) uses placeholders; copy it as `TROADiscordSEMonitor.cfg` before editing.
+
+Set `PlayerDiscordUrl` in `TROADiscordSEMonitor.cfg` to the invite you want the bot to share. It defaults to the TROA community invite (`https://discord.gg/troainc`). If an older config has this field empty, `!monitorplus discord` still shows the community invite and explains how to replace it with your own.
 
 ### 2. Use player commands
 
