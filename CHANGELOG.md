@@ -221,3 +221,7 @@ Every command the documentation advertises now works on the Monitor+ build as bo
 - Linked players can invoke any Torch command declared player-level as their linked Steam identity; elevated commands remain blocked. Authorized administrators retain the configured allow-list and allow-all controls for other Torch commands.
 - Forwarded replies are always returned through Monitor+'s Discord bot connection to the originating channel; Monitor+ no longer falls back to its own webhook for another plugin's response.
 - Removed obsolete balance, linked-player command-list, forwarded-output, and backup settings from generated configuration and examples.
+
+## Documentation update - 2026-10-03
+
+- Added a documentation landing page linking the setup flow, command reference, public-safe sample configuration, and feature ownership boundaries.
