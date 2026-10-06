@@ -33,8 +33,14 @@ Send the owning plugin’s command directly in the command channel. For example,
 
 Rewards and voting belong to Admin Overseer. Use its `!ov` player commands and `!ova` admin commands; Monitor+ does not provide a separate rewards system.
 
-See the separate [command reference](COMMANDS.md) for Monitor+ commands and usage details. See the [changelog](CHANGELOG.md) for release notes.
+See the separate [command reference](COMMANDS.md) for Monitor+ commands and usage details, the [roadmap](ROADMAP.md) for transport priorities, and the [changelog](CHANGELOG.md) for release notes.
 
 ## Documentation
 
 See [`docs/README.md`](docs/README.md) for the installation path, config example, command reference, and Monitor+ ownership boundaries.
+
+
+## Documentation
+
+Use the [documentation index](docs/README.md) and [detailed operator guide](docs/USER_GUIDE.md) for setup, everyday use, feature behavior, and troubleshooting. Check the changelog and the current release before applying version-specific instructions.
+

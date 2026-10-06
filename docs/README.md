@@ -8,3 +8,8 @@ Monitor+ connects Torch server monitoring and global player chat with Discord, l
 - Check the [changelog](../CHANGELOG.md) for release-specific behavior.
 
 Quick path: install the release ZIP in Torch, start once to generate the config, add bot/channel and account-link settings, restart, verify with `!bridge-id`, then reload changes with `!adminmonitorplus reload`. Only global player chat is relayed; faction and private chat remain in game.
+
+## Start here
+
+Read the [detailed user and operator guide](USER_GUIDE.md) for supported setup, feature workflows, safe operation, and troubleshooting.
+

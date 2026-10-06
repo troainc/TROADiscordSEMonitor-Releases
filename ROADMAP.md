@@ -1,25 +1,21 @@
 # Monitor+ Roadmap
 
-Planned and in-progress work for **TROADiscordSEMonitor (Monitor+)**. Scope and timing may change — nothing here is a firm commitment.
+Monitor+ is the server monitoring and Discord transport layer. It relays global chat, links Discord and Steam identities, reports its own server health, and forwards text commands to the plugin that owns them. Other plugins own their commands, data, and webhooks.
 
-## Next — v1.1.4K.3
+## Current command interface
 
-### Online player list
+- `!monitorplus <command>` — player-safe Monitor+ commands in Discord.
+- `!adminmonitorplus <command>` — administrator Monitor+ commands in Discord.
+- In-game Monitor+ commands retain their documented `!` command forms.
+- Monitor+ does not provide slash commands.
 
-- `!players` (Discord command channel + in-game, alias in-game `!who`) lists everyone currently connected with **name, Steam ID, and live ping**.
-- Admin-gated — Steam IDs and ping are staff data. Long lists cap at 30 with an "N more not shown" tail.
-- Per-player ping extends the existing replication-layer ping reflection to key ping per player, and falls back to `n/a` plus an aggregate ping line on hosts where per-player ping can't be resolved (e.g. some AMP / Wine setups).
+See [COMMANDS.md](COMMANDS.md) for the complete command list. See [README.md](README.md) for setup and use.
 
-## Under consideration
+## Reliability priorities
 
-- `/players` slash parity under the `/adminmonitorplus` group.
-- Optional public, names-only variant of the player list for players.
-- Confirm per-player ping keying across AMP / Wine hosts.
+1. Preserve exact command ownership while forwarding commands to Econ+, Profiler+, Admin Overseer, Hangar+, GridVault+, and Cleaner+.
+2. Return each forwarded response to its originating Discord channel once, with clear timeout and failure feedback.
+3. Keep faction and private chat out of the global Discord relay, and keep privileged output in authorized channels.
+4. Report Monitor+'s own bridge, bot, queue, and reconnect health without claiming to own another plugin's status.
 
-## Requesting a feature
-
-Open an issue on the repository or raise it in the staff channel.
-
----
-
-Released history lives in [CHANGELOG.md](CHANGELOG.md).
+These are priorities, not release promises. Released behavior is recorded in [CHANGELOG.md](CHANGELOG.md).

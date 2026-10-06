@@ -1,4 +1,15 @@
+## Public operator documentation expansion - 2026-10-06
+
+- Added a detailed user guide under docs/USER_GUIDE.md and linked it from the documentation index and root README.
+- Documented current setup, feature ownership, command/config references, operational workflows, safety boundaries, and version/status limitations using the published behavior.
+- Added repository-local context, contribution instructions, and a dated documentation log entry. No private source or credentials are included.
+
 # Monitor+ Changelog
+
+## Documentation correction - 2026-10-06
+
+- Replaced the stale v1.1.4K.3 and slash-command roadmap with the current `!monitorplus` / `!adminmonitorplus` interface and passthrough reliability priorities.
+- Clarified that Admin Overseer owns save-confirmed restart behavior; Monitor+ only transports authorized commands and replies.
 ## v1.1.5K11 — Restore Discord invite response
 
 - `!monitorplus discord` and in-game `!discord` now show the TROA community invite if `PlayerDiscordUrl` is blank, including in existing configs that saved an empty value.
@@ -225,3 +236,4 @@ Every command the documentation advertises now works on the Monitor+ build as bo
 ## Documentation update - 2026-10-03
 
 - Added a documentation landing page linking the setup flow, command reference, public-safe sample configuration, and feature ownership boundaries.
+
