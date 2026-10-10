@@ -1,3 +1,8 @@
+## 2026-10-09 — Bifrost Plugin Panel operator guide
+
+- Adds connection steps in the README and a detailed operator guide for opening this plugin’s workspace, permissions, settings, commands, and troubleshooting.
+- Describes expected plugin-owned views only when the installed build exposes real data or safe controls. Documentation only; no runtime adapter or behavior change is claimed.
+
 ## Public operator documentation expansion - 2026-10-06
 
 - Added a detailed user guide under docs/USER_GUIDE.md and linked it from the documentation index and root README.
