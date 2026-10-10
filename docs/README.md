@@ -13,3 +13,8 @@ Quick path: install the release ZIP in Torch, start once to generate the config,
 
 Read the [detailed user and operator guide](USER_GUIDE.md) for supported setup, feature workflows, safe operation, and troubleshooting.
 
+
+
+## Bifrost Plugin Panel
+
+[Connect and use the Panel workspace](BIFROST-PLUGIN-PANEL.md)
