@@ -1,3 +1,5 @@
+> **Bifrost Plugin Panel:** In a compatible Admin Overseer release, open **Plugin systems → Open workspace** for TROA Monitor+. The [connection guide](docs/BIFROST-PLUGIN-PANEL.md) covers webserver setup, IPv4/domain access, accounts, permissions, and troubleshooting. Metrics and controls depend on what this installed plugin build actually exposes.
+
 # Monitor+
 
 Current release: **v1.1.5K11**. Monitor+ handles server monitoring, global player-chat transport, account linking, and forwarding commands to the plugin that owns them. Only global chat is sent to Discord; faction and direct/private chat remain in game. It does not own another plugin’s commands or webhooks.
